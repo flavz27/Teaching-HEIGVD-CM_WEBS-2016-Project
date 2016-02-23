@@ -1,0 +1,9 @@
+{
+  "name": "teaching-heigvd-cm-webs-2016-project",
+  "version": "0.0.1",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ]
+}
