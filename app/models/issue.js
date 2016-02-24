@@ -6,7 +6,8 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var IssueSchema = new Schema({
-    type: String
+    type: String,
+
 });
 
 
