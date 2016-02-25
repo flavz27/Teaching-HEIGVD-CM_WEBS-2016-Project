@@ -8,9 +8,10 @@ var mongoose = require('mongoose'),
 var CommentSchema = new Schema({
     Date_created: {type: Number, required: true},
     Description: {type: String, required: true},
-    userId: {
-        type: Schema.Types.ObjectId, required: true,
-        //ref: "user",
+    user: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "user", //mongoose sait que c'est une référence à un autre modèèle. Methode "populate"
     },
 
 });
