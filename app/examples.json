@@ -1,0 +1,39 @@
+/**
+
+List of testing inputs for API
+**/
+
+
+//1. Issue
+
+{
+  "type": "test2",
+  "user": "56ced63b3376c594473ab8c2",
+
+  "date_created": 25022016,
+  "coordonate": {
+    "lat": 20000001,
+    "long": 9837597345
+  },
+  "status": "in progress"
+
+}
+;
+
+//2. User
+
+{
+  "citizen":1,
+  "staff": 1,
+  "username": "flaviaPittet"
+};
+
+
+//3. Comment
+
+{
+"Date_created": 25022016,
+"Description":" lorem ipsum bla bla bla",
+"user": "56ced63b3376c594473ab8c2"
+
+}
