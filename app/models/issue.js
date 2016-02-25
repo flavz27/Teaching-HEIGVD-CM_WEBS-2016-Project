@@ -24,6 +24,12 @@ var IssueSchema = new Schema({
             //comment_id
             current: {type:Boolean, required: true}
         }
+    ],
+
+    tags: [
+        {
+            name: {type: String, required: true}
+        }
     ]
 
 
