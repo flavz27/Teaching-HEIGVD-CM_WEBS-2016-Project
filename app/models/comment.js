@@ -8,7 +8,10 @@ var mongoose = require('mongoose'),
 var CommentSchema = new Schema({
     Date_created: {type: Number, required: true},
     Description: {type: String, required: true},
-    //user_id
+    userId: {
+        type: Schema.Types.ObjectId, required: true,
+        //ref: "user",
+    },
 
 });
 
