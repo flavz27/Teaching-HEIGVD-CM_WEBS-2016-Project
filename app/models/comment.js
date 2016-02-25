@@ -6,9 +6,9 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var CommentSchema = new Schema({
-    Date_created: Number,
-    Description: String,
-    
+    Date_created: {type: Number, required: true},
+    Description: {type: String, required: true},
+    //user_id
 
 });
 

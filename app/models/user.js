@@ -6,9 +6,9 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
-    citizen: Boolean,
-    staff: Boolean,
-    username: String
+    citizen: {type: Boolean, required: true},
+    staff: {type: Boolean, required: true},
+    username: {type: String, required: true},
 
 });
 
