@@ -26,7 +26,9 @@ List of testing inputs for API
   "citizen":1,
   "staff": 1,
   "username": "flaviaPittet"
-};
+}
+
+;
 
 
 //3. Comment

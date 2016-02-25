@@ -47,26 +47,34 @@ router.get('/', function (req, res, next) {
 
 
 function findIssuesByUser(req, res, next) {
-    if (!req.body.userId) {
+    if (!req.body.user) {
         // If no user ID is given, return an error.
         res.status(400).send('User ID is required');
         return;
-    } else if (!mongoose.Types.ObjectId.isValid(req.body.userId)) {
+    } else if (!mongoose.Types.ObjectId.isValid(req.body.user)) {
         // If the user ID is not a valid MongoDB ID, no need to execute a query, return an error directly.
-        res.status(400).send('No user with ID ' + req.body.userId);
+        res.status(400).send('No user with ID ' + req.body.user);
         return;
     }
 
     // Find the user.
-    Publisher.findById(req.body.userId, function (err, user) {
+
+    //User.findById(re) //TODO callback function like issue.find but with else if
+
+   /* var criteria = {
+        user: req.query.user;
+    };*/
+
+
+   Issue.find(criteria, function (err, issue) {
         if (err) {
             res.status(500).send(err);
             return;
-        } else if (!user) {
+        } /*else if (!issue) {
             // Return an error if the user doesn't exist.
             res.status(400).send('No user with ID ' + req.body.userId);
             return;
-        }
+        }*/
 
         // Store the user in the request.
         req.issueUser = user;
