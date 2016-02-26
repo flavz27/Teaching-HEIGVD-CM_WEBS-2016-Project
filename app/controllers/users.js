@@ -44,13 +44,48 @@ module.exports = function (app) {
  next();
  });
  }*/
+
+
+
 /**
  * ROUTES
  */
+
+
+
 /**
- * creates a new user
- * TODO
+ * @api {post} /users Create an user
+ * @apiVersion 0.0.0
+ * @apiName PostUser
+ * @apiGroup Users
+ * @apiPermission admin
+ *
+ * @apiDescription This route can create a news user with status staff or not.
+ *
+ *
+ * @apiParam {String} description The Description of the comments.
+ *
+ *
+ * @apiExample Example usage:
+ * curl -i http://localhost/user/4711
+ *
+ * @apiSuccess {Number}   id            The Users-ID.
+ * @apiSuccess {Boolean}  citizen       1 if the user is a citizen 0 if not.
+ * @apiSuccess {Boolean}  staff         1 if the user is a staff 0 if not.
+ * @apiSuccess {String}   username      Pseudo of the user.
+ *
+ *
+ * @apiError NoAccessRight Only authenticated Admins can access the data.
+ * @apiError UserNotFound   The <code>id</code> of the User was not found.
+ *
+ * @apiErrorExample Response (example):
+ *     HTTP/1.1 401 Not Authenticated
+ *     {
+ *       "error": "NoAccessRight"
+ *     }
+ *
  */
+
 router.post('/', function (req, res, next) { //chemin relatif a "api/people"
     /*res.send("Hello World!");*/
 
@@ -74,6 +109,41 @@ router.post('/', function (req, res, next) { //chemin relatif a "api/people"
 /**
  * Get all citizens
  */
+
+
+/**
+ * @api {get} /users/citizens Get every user how are a citizen.
+ * @apiVersion 0.0.0
+ * @apiName GetCitizen
+ * @apiGroup Users
+ * @apiPermission admin
+ *
+ * @apiDescription This route can get every user how are the field citizen with 1.
+ *
+ *
+ * @apiParam {Number} id The Users-ID.
+ *
+ *
+ * @apiSuccess {Number}   id            The Users-ID.
+ * @apiSuccess {Boolean}  citizen       1 if the user is a citizen 0 if not.
+ * @apiSuccess {Boolean}  staff         1 if the user is a staff 0 if not.
+ * @apiSuccess {String}   username      Pseudo of the user.
+ *
+ *
+ * @apiError NoAccessRight Only authenticated Admins can access the data.
+ * @apiError UserNotFound   The <code>id</code> of the User was not found.
+ *
+ * @apiErrorExample Response (example):
+ *     HTTP/1.1 401 Not Authenticated
+ *     {
+ *       "error": "NoAccessRight"
+ *     }
+ *
+ */
+
+
+
+
 
 router.get('/citizens', function (req, res, next) {
     /*res.send("Hello World!");*/
