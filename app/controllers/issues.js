@@ -145,6 +145,7 @@ router.get('/:id', findIssue, function (req, res, next) {
  * get all isues for one user
  */
 
+/*
 route.get('/:user_id/issues', findUser, findIssuesByUser, function(req, res, next){
     res.send(req.issues);
-});
+});*/
