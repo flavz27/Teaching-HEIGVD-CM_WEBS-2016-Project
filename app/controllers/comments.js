@@ -14,6 +14,8 @@ module.exports = function (app) {
  * @apiGroup Comments
  * @apiPermission admin
  *
+ * @apiDescription This route can gets all comments are editing in the application. This route isn't used but we have make it because thi is the base command.
+ *
  *
  * @apiParam {String} description The Description of the comments.
  *
@@ -35,14 +37,6 @@ module.exports = function (app) {
  *     }
  */
 
-
-
-
-
-
-/**
- * gets all comments
- */
 router.get('/', function (req, res, next) {
     Comment.find(function (err, comments) {
         if (err) {
@@ -57,10 +51,21 @@ router.get('/', function (req, res, next) {
 
 /**
  * @api {post} /comments Create a comment
- * @apiName CreateComment
+ * @apiVersion 0.0.0
+ * @apiName PostComment
  * @apiGroup Comments
+ * @apiPermission user
  *
- * @apiSuccess {String} description Description of the comment.
+ *
+ * @apiParam {String} description The Description of the comments.
+ *
+ *
+ * @apiSuccess {Number}   id            The Comments-ID.
+ * @apiSuccess {Number}   date_created  Creation Date.
+ * @apiSuccess {String}   description   Description of the Comment.
+ * @apiSuccess {Number}   user          User-ID how are edit the comment.
+ *
+ *
  */
 
 router.post('/', function (req, res, next) { //chemin relatif a "api/people"
