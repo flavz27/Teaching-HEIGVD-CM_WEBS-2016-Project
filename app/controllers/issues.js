@@ -1,6 +1,3 @@
-/**
- * Created by Sabine on 25.02.2016.
- */
 
 var express = require('express'),
     router = express.Router(), //express router
@@ -89,8 +86,11 @@ function findIssue(req, res, next) {
  */
 
 /**
- * creates a new issue
+ * @api {post} /issues Create an issue
+ * @apiName CreateIssue
+ * @apiGroup Issues
  *
+ * @apiSuccess {String} type Type of the issue.
  */
 router.post('/', function (req, res, next) { //chemin relatif a "api/people"
 //res.send("Hello World!");
