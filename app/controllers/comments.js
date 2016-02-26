@@ -6,6 +6,40 @@ var express = require('express'),
 module.exports = function (app) {
     app.use('/api/comments', router);
 };
+
+/**
+ * @api {get} /comments Read all comments
+ * @apiVersion 0.0.0
+ * @apiName GetComments
+ * @apiGroup Comments
+ * @apiPermission admin
+ *
+ *
+ * @apiParam {String} description The Description of the comments.
+ *
+ *
+ * @apiSuccess {Number}   id            The Comments-ID.
+ * @apiSuccess {Number}   date_created  Creation Date.
+ * @apiSuccess {String}   description   Description of the Comment.
+ * @apiSuccess {Number}   user          User-ID how are edit the comment.
+
+
+ *
+ * @apiError NoAccessRight Only authenticated Admins can access the data.
+ * @apiError UserNotFound   The <code>id</code> of the User was not found.
+ *
+ * @apiErrorExample Response (example):
+ *     HTTP/1.1 401 Not Authenticated
+ *     {
+ *       "error": "NoAccessRight"
+ *     }
+ */
+
+
+
+
+
+
 /**
  * gets all comments
  */

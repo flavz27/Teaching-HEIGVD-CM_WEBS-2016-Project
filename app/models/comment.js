@@ -6,8 +6,8 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var CommentSchema = new Schema({
-    Date_created: {type: Number, required: true},
-    Description: {type: String, required: true},
+    date_created: {type: Number, required: true},
+    description: {type: String, required: true},
     user: {
         type: Schema.Types.ObjectId,
         required: true,
