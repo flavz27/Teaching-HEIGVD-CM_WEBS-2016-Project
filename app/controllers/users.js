@@ -66,8 +66,6 @@ module.exports = function (app) {
  * @apiParam {String} description The Description of the comments.
  *
  *
- * @apiExample Example usage:
- * curl -i http://localhost/user/4711
  *
  * @apiSuccess {Number}   id            The Users-ID.
  * @apiSuccess {Boolean}  citizen       1 if the user is a citizen 0 if not.
@@ -123,6 +121,9 @@ router.post('/', function (req, res, next) { //chemin relatif a "api/people"
  *
  * @apiParam {Number} id The Users-ID.
  *
+ * @apiExample Example usage:
+ * curl -i http://localhost/user/4711
+ *
  *
  * @apiSuccess {Number}   id            The Users-ID.
  * @apiSuccess {Boolean}  citizen       1 if the user is a citizen 0 if not.
@@ -142,9 +143,6 @@ router.post('/', function (req, res, next) { //chemin relatif a "api/people"
  */
 
 
-
-
-
 router.get('/citizens', function (req, res, next) {
     /*res.send("Hello World!");*/
     var criteria = {
@@ -162,8 +160,39 @@ router.get('/citizens', function (req, res, next) {
     });
 });
 
+
 /**
- * Get all staffs
+ * @api {get} /users/staffs Get all staff.
+ * @apiVersion 0.0.0
+ * @apiName GetStaff
+ * @apiGroup Users
+ * @apiPermission admin
+ *
+ * @apiDescription This route can get every user how are the field staff with 1.
+ *
+ *
+ * @apiParam {Number} id The Users-ID.
+ *
+ *
+ * @apiExample Example usage:
+ * curl -i http://localhost/user/4711
+ *
+ *
+ * @apiSuccess {Number}   id            The Users-ID.
+ * @apiSuccess {Boolean}  citizen       1 if the user is a citizen 0 if not.
+ * @apiSuccess {Boolean}  staff         1 if the user is a staff 0 if not.
+ * @apiSuccess {String}   username      Pseudo of the user.
+ *
+ *
+ * @apiError NoAccessRight Only authenticated Admins can access the data.
+ * @apiError UserNotFound   The <code>id</code> of the User was not found.
+ *
+ * @apiErrorExample Response (example):
+ *     HTTP/1.1 401 Not Authenticated
+ *     {
+ *       "error": "NoAccessRight"
+ *     }
+ *
  */
 
 router.get('/staffs', function (req, res, next) {
