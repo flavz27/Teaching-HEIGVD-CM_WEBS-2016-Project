@@ -12,6 +12,12 @@ module.exports = function (grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    apidoc: {
+      myapp: {
+        src: "app/",
+        dest: "public/apidoc/"
+      }
+    },
     develop: {
       server: {
         file: 'app.js'
