@@ -1,9 +1,9 @@
-
 var express = require('express'),
     router = express.Router(), //express router
     mongoose = require('mongoose'),
 
-    Issue = mongoose.model('Issue');
+    Issue = mongoose.model('Issue'),
+    findUser = require("../services/findUser");
 //ROUTER
 module.exports = function (app) {
     app.use('/api/issues', router);
@@ -24,8 +24,12 @@ function findIssue(req, res, next) {
         .findById(req.params.id);
 
     if (req.query.embed == 'user') {
-        query = query.populate('user');
-    } //TODO WTF does this do ???
+        query = query.populate('user'); //si dans issue ya une "FK". si on veut récupérer l'objet complet, on peut utiliser ça. Remplace ID par objet
+    } //TODO for comments as well
+
+    if (req.query.embed == 'comment') {
+        query = query.populate('comments_user.comment'); //si dans issue ya une "FK". si on veut récupérer l'objet complet, on peut utiliser ça. Remplace ID par objet
+    } // TODO test
 
     query.exec(function (err, issue) {
         if (err) {
@@ -36,6 +40,7 @@ function findIssue(req, res, next) {
             return;
         }
 
+
         // Store the issue in the request.
         req.issue = issue;
 
@@ -43,44 +48,36 @@ function findIssue(req, res, next) {
     });
 }
 
-/*
- function findIssuesByUser(req, res, next) {
- if (!req.body.user) {
- // If no user ID is given, return an error.
- res.status(400).send('User ID is required');
- return;
- } else if (!mongoose.Types.ObjectId.isValid(req.body.user)) {
- // If the user ID is not a valid MongoDB ID, no need to execute a query, return an error directly.
- res.status(400).send('No user with ID ' + req.body.user);
- return;
- }
-
- // Find the user.
-
- //User.findById(re) //TODO callback function like issue.find but with else if
-
- /!*var criteria = {
- user: req.query.user;
- };*!/
+function findIssuesByUser(req, res, next) {
 
 
- Issue.find(criteria, function (err, issue) {
- if (err) {
- res.status(500).send(err);
- return;
- } /!*else if (!issue) {
- // Return an error if the user doesn't exist.
- res.status(400).send('No user with ID ' + req.body.userId);
- return;
- }*!/
+    // Find the user.
 
- // Store the user in the request.
- req.issueUser = user;
+    //User.findById(re) //TODO callback function like issue.find but with else if
 
- // Forward the request to the next middleware.
- next();
- });
- }*/
+    var criteria = {
+     user: req.user._id //autre Middleware avant
+     };
+
+
+    Issue.find(criteria, function (err, issues) {
+        if (err) {
+            res.status(500).send(err);
+            return;
+        }
+        /*else if (!issue) {
+         // Return an error if the user doesn't exist.
+         res.status(400).send('No user with ID ' + req.body.userId);
+         return;
+         }*/
+
+        // Store the user in the request.
+        req.issues = issues;
+
+        // Forward the request to the next middleware.
+        next();
+    });
+}
 /**
  * ROUTES
  */
@@ -141,4 +138,13 @@ router.delete('/:id', findIssue, function (req, res, next) {
  */
 router.get('/:id', findIssue, function (req, res, next) {
     res.send(req.issue);
+});
+
+
+/**
+ * get all isues for one user
+ */
+
+route.get('/:user_id/issues', findUser, findIssuesByUser, function(req, res, next){
+    res.send(req.issues);
 });

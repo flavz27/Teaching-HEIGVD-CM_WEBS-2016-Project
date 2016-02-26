@@ -6,7 +6,9 @@
 var express = require('express'),
     router = express.Router(),
     mongoose = require('mongoose'),
-    User = mongoose.model('User');
+    User = mongoose.model('User'),
+    findUser = require("../services/findUser");
+
 
 module.exports = function (app) {
     app.use('/api/users', router);
@@ -16,14 +18,14 @@ module.exports = function (app) {
  * MIDDLEWARES
  */
 
-function findUser(req, res, next) {
+/*function findUser(req, res, next) {
 
     var query = User
         .findById(req.params.id);
 
-   /* if (req.query.embed == 'user') {
+   /!* if (req.query.embed == 'user') {
         query = query.populate('user');
-    } //TODO WTF does this do ???*/
+    } //TODO WTF does this do ???*!/
 
     query.exec(function (err, user) {
         if (err) {
@@ -39,7 +41,7 @@ function findUser(req, res, next) {
 
         next();
     });
-}
+}*/
 /**
  * ROUTES
  */
@@ -73,8 +75,12 @@ ID Sabine: 56ced66daa89b1aa47ed6a46
 
 router.get('/citizens', function (req, res, next) {
     /*res.send("Hello World!");*/
+    var criteria = {
+        citizen : true
 
-     User.find({'citizen' : "true"}, function (err, users) {
+    }
+
+     User.find(criteria, function (err, users) {
      if (err) {
      res.status(500).send(err);
      return;
