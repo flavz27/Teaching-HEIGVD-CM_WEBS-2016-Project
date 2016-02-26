@@ -7,7 +7,9 @@ var express = require('express'),
     router = express.Router(),
     mongoose = require('mongoose'),
     User = mongoose.model('User'),
-    findUser = require("../services/findUser");
+    Issue = mongoose.model('Issue'),
+    findUser = require("../services/findUser"),
+    findIssuesByUser = require("../services/findIssuesByUser");
 
 
 module.exports = function (app) {
@@ -20,28 +22,28 @@ module.exports = function (app) {
 
 /*function findUser(req, res, next) {
 
-    var query = User
-        .findById(req.params.id);
+ var query = User
+ .findById(req.params.id);
 
-   /!* if (req.query.embed == 'user') {
-        query = query.populate('user');
-    } //TODO WTF does this do ???*!/
+ /!* if (req.query.embed == 'user') {
+ query = query.populate('user');
+ } //TODO WTF does this do ???*!/
 
-    query.exec(function (err, user) {
-        if (err) {
-            res.status(500).send(err);
-            return;
-        } else if (!user) {
-            res.status(404).send('user not found');
-            return;
-        }
+ query.exec(function (err, user) {
+ if (err) {
+ res.status(500).send(err);
+ return;
+ } else if (!user) {
+ res.status(404).send('user not found');
+ return;
+ }
 
-        // Store the issue in the request.
-        req.user = user;
+ // Store the issue in the request.
+ req.user = user;
 
-        next();
-    });
-}*/
+ next();
+ });
+ }*/
 /**
  * ROUTES
  */
@@ -66,8 +68,8 @@ router.post('/', function (req, res, next) { //chemin relatif a "api/people"
 
 
 /*
-ID Flavia: 56ced63b3376c594473ab8c2
-ID Sabine: 56ced66daa89b1aa47ed6a46
+ ID Flavia: 56ced63b3376c594473ab8c2
+ ID Sabine: 56ced66daa89b1aa47ed6a46
  */
 /**
  * Get all citizens
@@ -76,18 +78,18 @@ ID Sabine: 56ced66daa89b1aa47ed6a46
 router.get('/citizens', function (req, res, next) {
     /*res.send("Hello World!");*/
     var criteria = {
-        citizen : true
+        citizen: true
 
     }
 
-     User.find(criteria, function (err, users) {
-     if (err) {
-     res.status(500).send(err);
-     return;
-     }
+    User.find(criteria, function (err, users) {
+        if (err) {
+            res.status(500).send(err);
+            return;
+        }
 
-     res.send(users);
-     });
+        res.send(users);
+    });
 });
 
 /**
@@ -97,7 +99,7 @@ router.get('/citizens', function (req, res, next) {
 router.get('/staffs', function (req, res, next) {
     /*res.send("Hello World!");*/
 
-    User.find({'staff' : "true"}, function (err, users) {
+    User.find({'staff': "true"}, function (err, users) {
         if (err) {
             res.status(500).send(err);
             return;
@@ -142,5 +144,10 @@ router.delete('/:id', findUser, function (req, res, next) {
 });
 
 
+/**
+ * get all issues for one user
+ */
 
-
+router.get('/:id/issues', findUser, findIssuesByUser, function (req, res, next) {
+    res.send(req.issues);
+});
