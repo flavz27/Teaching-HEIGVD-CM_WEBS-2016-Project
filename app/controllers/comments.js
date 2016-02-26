@@ -64,8 +64,6 @@ router.get('/', function (req, res, next) {
  * @apiSuccess {Number}   date_created  Creation Date.
  * @apiSuccess {String}   description   Description of the Comment.
  * @apiSuccess {Number}   user          User-ID how are edit the comment.
-
-
  *
  *
  */
