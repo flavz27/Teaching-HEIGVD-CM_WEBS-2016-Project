@@ -21,14 +21,16 @@ var config = {
     db: 'mongodb://localhost/teaching-heigvd-cm-webs-2016-project-test'
   },
 
-  production: {
+  production: { //prévu pour Heroku / ex
     root: rootPath,
     app: {
       name: 'teaching-heigvd-cm-webs-2016-project'
     },
-    port: 3000,
-    db: 'mongodb://localhost/teaching-heigvd-cm-webs-2016-project-production'
+    port: process.env.PORT || 3000,
+    db: process.env.MONGOLAB_URI || 'mongodb://localhost/teaching-heigvd-cm-webs-2016-project-production'
   }
 };
 
 module.exports = config[env];
+
+//$NODE_ENV = production;
