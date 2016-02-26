@@ -21,7 +21,7 @@ var config = {
     db: 'mongodb://localhost/teaching-heigvd-cm-webs-2016-project-test'
   },
 
-  production: {
+  production: { //prévu pour Heroku / ex
     root: rootPath,
     app: {
       name: 'teaching-heigvd-cm-webs-2016-project'
@@ -32,3 +32,5 @@ var config = {
 };
 
 module.exports = config[env];
+
+//$NODE_ENV = production;
