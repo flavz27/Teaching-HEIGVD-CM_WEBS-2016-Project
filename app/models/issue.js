@@ -10,7 +10,7 @@ var IssueSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
         required: true,
-        ref: "user", //mongoose sait que c'est une référence à un autre modèèle. Methode "populate"
+        ref: "User", //mongoose sait que c'est une référence à un autre modèèle. Methode "populate"
     },
 
     date_created: {type: Number, required: true},
@@ -24,7 +24,7 @@ var IssueSchema = new Schema({
             comment: {
                 type: Schema.Types.ObjectId,
                 required: true,
-                ref: "comment", //mongoose sait que c'est une référence à un autre modèèle. Methode "populate"
+                ref: "Comment", //mongoose sait que c'est une référence à un autre modèèle. Methode "populate" TODO maj
             },
 
         }
@@ -37,7 +37,7 @@ var IssueSchema = new Schema({
             comment: {
                 type: Schema.Types.ObjectId,
                 required: false,
-                ref: "comment", //mongoose sait que c'est une référence à un autre modèèle. Methode "populate"
+                ref: "Comment", //mongoose sait que c'est une référence à un autre modèèle. Methode "populate"
             },
             current: {type: Boolean, required: false}
         }
