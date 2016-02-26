@@ -1,11 +1,13 @@
+
+var express = require('express'),
+    mongoose = require('mongoose'),
+    User = mongoose.model('User');
+
 function findUser(req, res, next) {
 
     var query = User
         .findById(req.params.id);
 
-    /* if (req.query.embed == 'user') {
-     query = query.populate('user');
-     } //TODO WTF does this do ???*/
 
     query.exec(function (err, user) {
         if (err) {
