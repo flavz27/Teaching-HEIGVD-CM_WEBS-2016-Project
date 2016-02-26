@@ -19,9 +19,15 @@ router.get('/', function (req, res, next) {
         res.send(comments);
     });
 });
+
+
 /**
- creates a new comment
- **/
+ * @api {post} /comments Create a comment
+ * @apiName CreateComment
+ * @apiGroup Comments
+ *
+ * @apiSuccess {String} description Description of the comment.
+ */
 
 router.post('/', function (req, res, next) { //chemin relatif a "api/people"
     /*res.send("Hello World!");*/
