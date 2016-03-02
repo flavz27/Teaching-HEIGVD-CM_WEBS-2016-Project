@@ -15,7 +15,15 @@ List of testing inputs for API
     "lat": 20000001,
     "long": 9837597345
   },
-  "status": "in progress"
+  "status": "in progress",
+  "comments_user": [
+    {
+      "comment": "0awj"
+    },
+    {
+      "comment": "asd98"
+    }
+  ]
 
 }
 ;

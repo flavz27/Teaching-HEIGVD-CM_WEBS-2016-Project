@@ -11,7 +11,7 @@ var CommentSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
         required: true,
-        ref: "user", //mongoose sait que c'est une référence à un autre modèèle. Methode "populate"
+        ref: "user", //mongoose sait que c'est une référence à un autre modèle. Methode "populate"
     },
 
 });

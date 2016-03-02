@@ -3,7 +3,8 @@ var express = require('express'),
     mongoose = require('mongoose'),
 
     Issue = mongoose.model('Issue'),
-    findUser = require("../services/findUser");
+    findUser = require("../services/findUser"),
+    _ = require("underscore");
 //ROUTER
 module.exports = function (app) {
     app.use('/api/issues', router);
@@ -109,6 +110,50 @@ router.delete('/:id', findIssue, function (req, res, next) {
 router.get('/:id', findIssue, function (req, res, next) {
     res.send(req.issue);
 });
+/**
+ * modify an issue
+ */
+router.put('/:id', findIssue, function (req, res, next) {
 
 
 
+//update partiel
+    var updates = _.pick(req.body, 'type', 'coordinates', 'status'); //restreint les trucs à manger
+    _.extend(req.issue, updates); //regarde dans req. body les attributs et les remplacer, mais seulement ceux qui sont la
+
+
+
+    req.issue.save(function (err, updatedIssue) {
+        if (err) {
+            res.status(500).send(err);
+            return;
+        }
+
+        res.send(updatedIssue);
+    });
+});
+
+/**
+ * create a comment
+ */
+
+router.post('/:id_issue/comments', function (req, res, next) { //chemin relatif a "api/people"
+    /*res.send("Hello World!");*/
+
+
+    id = req.params.id_issue;
+    findIssue;
+
+    var comment = new Comment(req.body);
+
+    comment.save(function (err, createdComment) {
+        if (err) {
+            res.status(500).send(err); // pas propre car donne infos au client
+            return; //arrête la fonction. ATTENTION - LE METTRE car sinon CRASH du serveur
+        }
+        res.send(createdComment);
+    });
+
+});
+
+//id: 56ced91fab3a5e6648883586

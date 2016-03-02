@@ -6,7 +6,39 @@ var express = require('express'),
 module.exports = function (app) {
     app.use('/api/comments', router);
 };
+/** MIDDLEWAREs
+ *
+ *
+ */
 
+
+
+function findComment(req, res, next) {
+
+    var query = Comment
+        .findById(req.params.id);
+
+
+    query.exec(function (err, comment) {
+        if (err) {
+            res.status(500).send(err);
+            return;
+        } else if (!comment) {
+            res.status(404).send('Comment not found');
+            return;
+        }
+
+
+        // Store the issue in the request.
+        req.comment = comment;
+
+        next();
+    });
+}
+
+/**
+ * ROUTES
+ */
 /**
  * @api {get} /comments Read all comments
  * @apiVersion 0.0.0
@@ -82,3 +114,50 @@ router.post('/', function (req, res, next) { //chemin relatif a "api/people"
     });
 
 });
+
+
+/**
+ * get a comment
+ */
+router.get('/:id', findComment, function (req, res, next) {
+    res.send(req.comment);
+});
+
+/**
+ * returns comments_user for an issue
+ */
+//TODO: move to issues and do the same for users
+router.get('/', function (req, res, next) {
+    Comment.find(function (err, comments) {
+        if (err) {
+            res.status(500).send(err);
+            return;
+        }
+
+        res.send(comments);
+    });
+});
+
+/**
+ * modify a comment
+ * OKAY TESTED
+ * */
+
+ router.put('/:id', findComment, function(req, res) {
+
+  // Update the description.
+  req.description = req.body.description;
+
+
+  // Save the comment.
+  req.comment.save(function(err, updatedComment) {
+    if (err) {
+      res.status(500).send(err);
+      return;
+    }
+
+    res.send(updatedComment);
+  });
+});
+
+
