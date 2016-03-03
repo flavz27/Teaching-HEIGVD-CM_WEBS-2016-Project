@@ -1,6 +1,7 @@
 var express = require('express'),
     router = express.Router(), //express router
     mongoose = require('mongoose'),
+    async = require('async'),
 
     Issue = mongoose.model('Issue'),
     findUser = require("../services/findUser"),
@@ -17,14 +18,14 @@ module.exports = function (app) {
 
 /**
  * Middleware that finds the issue corresponding to the :id URL parameter
- * and stores it in `req.book`.
+ * and stores it in `req.issue`.
  */
 function findIssue(req, res, next) {
 
     var query = Issue
         .findById(req.params.id);
-  /*      .skip(offset)
-        .limit(limit);*/
+    /*      .skip(offset)
+     .limit(limit);*/
 
     if (req.query.embed == 'user') {
         query = query.populate('user'); //si dans issue ya une "FK". si on veut récupérer l'objet complet, on peut utiliser ça. Remplace ID par objet
@@ -51,6 +52,30 @@ function findIssue(req, res, next) {
     });
 }
 
+/*
+function findMatchingIssues(callback) {
+
+    var query = Issue
+        .find(criteria)
+        // Do not forget to sort, as pagination makes more sense with sorting.
+      /!*  .sort('date')*!/ TODO
+        .skip(offset)
+        .limit(limit);
+
+    // Embed publisher object if specified in the query.
+/!*    if (req.query.embed == 'publisher') {
+        query = query.populate('publisher');
+    }*!/
+
+    // Execute the query.
+    query.exec(function(err, issues) {
+        if (err) {
+            callback(err);
+        } else {
+            callback(undefined, issues);
+        }
+    });
+}*/
 /**
  * ROUTES
  */
@@ -76,81 +101,141 @@ router.post('/', function (req, res, next) { //chemin relatif a "api/people"
     });
 
 });
+/**
+ *
+ */
 
 /**
- * Get all issue
- * TODO: pagination fucking motherfucking shit
+ * Get all issues
+ * TODO get all issues with a specific status (status=...?) with req.query
+ * specify what statuses are authorized
  */
 
 router.get('/', function (req, res, next) {
-  /*  Issue.find(function (err, issues) {
+
+    var criteria = {};
+
+
+    // Get page and page size for pagination.
+    var page = req.query.page ? parseInt(req.query.page, 10) : 1,
+        pageSize = req.query.pageSize ? parseInt(req.query.pageSize, 10) : 10;
+
+    // Convert page and page size to offset and limit.
+    var offset = (page - 1) * pageSize,
+        limit = pageSize;
+
+    // Count all issues (without filters).
+    function countAllIssues(callback) {
+        Issue.count(function(err, totalCount) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(undefined, totalCount);
+            }
+        });
+    }
+
+    // Count issues matching the filters.
+    function countFilteredIssues(callback) {
+        Issue.count(criteria, function(err, filteredCount) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(undefined, filteredCount);
+            }
+        });
+    }
+
+    // Find issues matching the filters.
+    function findMatchingIssues(callback) {
+
+        var query = Issue
+            .find(criteria)
+
+            .skip(offset)
+            .limit(limit);
+
+
+        // Execute the query.
+        query.exec(function(err, issues) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(undefined, issues);
+            }
+        });
+    }
+
+    // Set the pagination headers and send the matching issues in the body.
+    function sendResponse(err, results) {
         if (err) {
             res.status(500).send(err);
             return;
         }
 
+        var totalCount = results[0],
+            filteredCount = results[1],
+            issues = results[2];
+
+        // Return the pagination data in headers.
+        res.set('X-Pagination-Page', page);
+        res.set('X-Pagination-Page-Size', pageSize);
+        res.set('X-Pagination-Total', totalCount);
+        res.set('X-Pagination-Filtered-Total', filteredCount);
+
         res.send(issues);
-    });*/
+    }
 
-        var page = req.query.page ? parseInt(req.query.page, 10) :1,
-            pageSize = req.query.pageSize ? parseInt(req.query.pageSize, 10): 30;
-
-        var offset = (page - 1) * pageSize,
-            limit = pageSize;
-        Issue.count(function(err, totalCount){
-            if (err){
-                res.status(500).send(err);
-                return;
-            }
-            res.set('X-Pagination-Page', page);
-            res.set('X-Pagination-Page-Size', pageSize);
-            res.set('X-Pagination-Total', totalCount);
-            Issue.find(function(err, issue){
-                if (err){
-                    res.status(500).send(err);
-                    return;
-                }
-                res.send(issue);
-            });
-        });
-
+    async.parallel([
+        countAllIssues,
+        countFilteredIssues,
+        findMatchingIssues
+    ], sendResponse);
 });
-/** pagination
-            var criteria = {};
+    // MY SHIT
+   /* /!*  Issue.find(function (err, issues) {
+     if (err) {
+     res.status(500).send(err);
+     return;
+     }
 
-            // Filter by publisher.
-            if (req.query.publisher) {
-                criteria.publisher = req.query.publisher;
-            }
+     res.send(issues);
+     });*!/
+    var criteria = {};
+    var page = req.query.page ? parseInt(req.query.page, 10) : 1,
+        pageSize = req.query.pageSize ? parseInt(req.query.pageSize, 10) : 30;
 
-            // Filter by format.
-            if (typeof(req.query.format) == "object" && req.query.format.length) {
-                // If format is an array, match all books which format is included in the array.
-                criteria.format = { $in: req.query.format };
-            } else if (req.query.format) {
-                // If format is a string, match only books that have that specific format.
-                criteria.format = req.query.format;
-            }
+    var offset = (page - 1) * pageSize,
+        limit = pageSize;
 
-            // Get page and page size for pagination.
-            var page = req.query.page ? parseInt(req.query.page, 10) : 1,
-                pageSize = req.query.pageSize ? parseInt(req.query.pageSize, 10) : 30;
+    //OK UNTIL HERE, I UNDERSTAND
+    Issue.count(function (err, totalCount) {
+        if (err) {
+            res.status(500).send(err);
+            return;
+        }
+        res.set('X-Pagination-Page', page);
+        res.set('X-Pagination-Page-Size', pageSize);
+        res.set('X-Pagination-Total', totalCount);
 
-            // Convert page and page size to offset and limit.
-            var offset = (page - 1) * pageSize,
-                limit = pageSize;
+    });
+    Issue.find(criteria).sort("date").skip(offset).limit(limit).exec(function (err, issues) {
+        if (err) {
+            res.status(500).send(err);
+            return
+        }
+        res.send(issues);
+    });
+    /!*Issue.find(function(err, issue){
+     if (err){
+     res.status(500).send(err);
+     return;
+     }
+     res.send(issue);
+     });*!/*/
 
-            // Count all books (without filters).
-            function countAllBooks(callback) {
-                Book.count(function(err, totalCount) {
-                    if (err) {
-                        callback(err);
-                    } else {
-                        callback(undefined, totalCount);
-                    }
-                });
 
-    end pagination*/
+
 /**
  * delete an issue
  */
@@ -180,7 +265,6 @@ router.put('/:id', findIssue, function (req, res, next) {
 //update partiel
     var updates = _.pick(req.body, 'type', 'coordinates', 'status'); //restreint les trucs à manger
     _.extend(req.issue, updates); //regarde dans req. body les attributs et les remplacer, mais seulement ceux qui sont la
-
 
 
     req.issue.save(function (err, updatedIssue) {

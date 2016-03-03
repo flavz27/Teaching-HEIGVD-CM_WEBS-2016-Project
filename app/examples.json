@@ -42,8 +42,8 @@ List of testing inputs for API
 //3. Comment
 
 {
-"Date_created": 25022016,
-"Description":" lorem ipsum bla bla bla",
+"date_created": 25022016,
+"description":" lorem ipsum bla bla bla",
 "user": "56ced63b3376c594473ab8c2"
 
 }
