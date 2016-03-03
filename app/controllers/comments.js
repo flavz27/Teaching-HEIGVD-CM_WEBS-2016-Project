@@ -161,3 +161,16 @@ router.get('/', function (req, res, next) {
 });
 
 
+/**
+ * deletes a comment
+ */
+router.delete('/:id', findComment, function (req, res, next) {
+    req.comment.remove(function (err) {
+        if (err) {
+            res.status(500).send(err);
+            return;
+        }
+
+        res.sendStatus(204);
+    });
+});
