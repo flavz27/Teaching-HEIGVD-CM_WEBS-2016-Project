@@ -153,8 +153,17 @@
     "type": "post",
     "url": "/issues",
     "title": "Create an issue",
+    "version": "0.0.0",
     "name": "CreateIssue",
     "group": "Issues",
+    "description": "<p>It creates an issue</p>",
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "http://localhost/api/issues/",
+        "type": "json"
+      }
+    ],
     "success": {
       "fields": {
         "Success 200": [
@@ -163,12 +172,267 @@
             "type": "String",
             "optional": false,
             "field": "type",
-            "description": "<p>Type of the issue.</p>"
+            "description": "<p>Type of the issue (according to a list).</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Schema.Types.ObjectId",
+            "optional": false,
+            "field": "user",
+            "description": "<p>User how are created the issue</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "date_created",
+            "description": "<p>Creation date of issue</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "coordonate",
+            "description": "<p>Coordinated the problem (longitude and latitude)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "coordonate.lat",
+            "description": "<p>Latitude coordinate</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "coordonate.long",
+            "description": "<p>Longitude coordinate</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status of the issue</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "[]",
+            "optional": false,
+            "field": "comments_user",
+            "description": "<p>Board with all comments of the issue</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Schema.Types.ObjectId",
+            "optional": false,
+            "field": "comments_user.comment",
+            "description": "<p>A comment of the issue</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "[]",
+            "optional": false,
+            "field": "action",
+            "description": "<p>Board with all actions of the issue</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "action.date",
+            "description": "<p>Creation date of action</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "action.action",
+            "description": "<p>Definition of the action</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Schema.Types.ObjectId",
+            "optional": false,
+            "field": "action.comment",
+            "description": "<p>A comment of the action</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "[]",
+            "optional": false,
+            "field": "tags",
+            "description": "<p>Board with all tags of the issue</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "tags.name",
+            "description": "<p>Name of the tag</p>"
           }
         ]
       }
     },
+    "filename": "app/controllers/issues.js",
+    "groupTitle": "Issues"
+  },
+  {
+    "type": "get",
+    "url": "/issues",
+    "title": "Get all the Issues",
     "version": "0.0.0",
+    "name": "GetIssues",
+    "group": "Issues",
+    "description": "<p>This allow to get all the issues</p>",
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "http://localhost/api/issues",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Schema.Types.ObjectId",
+            "optional": false,
+            "field": "author",
+            "description": "<p>The Author-Id who create the Issue</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Schema.Types.ObjectId",
+            "optional": false,
+            "field": "type",
+            "description": "<p>The Type-Id of the Issue</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Schema.Types.ObjectId[]",
+            "optional": false,
+            "field": "tags",
+            "description": "<p>The Tag-Id related to the Issue</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "description",
+            "description": "<p>The description of the Issue</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "location",
+            "description": "<p>The type of the geographic coordinates</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number[]",
+            "optional": false,
+            "field": "location.coordinates",
+            "description": "<p>The geographic coordinates of the Issue</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>The status of the Issue</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "[]",
+            "optional": false,
+            "field": "actions",
+            "description": "<p>The actions done on the Issue</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "actions.type",
+            "description": "<p>The type of the action (Comment or Status Change)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Schema.Types.ObjectId",
+            "optional": false,
+            "field": "actions.author",
+            "description": "<p>The Author-Id of the action</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "actions.date",
+            "description": "<p>The date of the action</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "actions.status",
+            "description": "<p>The new status of the issue (only if its a Status Change)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "actions.content",
+            "description": "<p>The content of the comment (only if its a Comment)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "createdAt",
+            "description": "<p>The date of creation of the issue</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UnexpectedToken",
+            "description": "<p>The issue has some parameters with uncorrect type</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ValidationError",
+            "description": "<p>There are missing parameters</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "Error404",
+            "description": "<p>The server has an unexpected error</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (Unexpected Token):",
+          "content": "  <h1>Unexpected token j</h1>\n<h2>400</h2>\n<pre>SyntaxError: Unexpected token j",
+          "type": "json"
+        },
+        {
+          "title": "Response (Validation Error):",
+          "content": "{\"message\": \"Issue validation failed\",\n  \"name\": \"ValidationError\",\n  \"errors\": {\n    \"description\": {\n      \"properties\": {\n        \"type\": \"required\",\n        \"message\": \"Path `{PATH}` is required.\",\n        \"path\": \"description\"\n      },\n      \"message\": \"Path `description` is required.\",\n      \"name\": \"ValidatorError\",\n      \"kind\": \"required\",\n      \"path\": \"description\"\n    }\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
     "filename": "app/controllers/issues.js",
     "groupTitle": "Issues"
   },

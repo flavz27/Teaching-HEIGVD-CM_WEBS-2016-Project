@@ -93,9 +93,24 @@ function findMatchingIssues(callback) {
  * @apiDescription It creates an issue
  *
  * @apiExample Example usage:
+ * http://localhost/api/issues/
  *
  *
- * @apiSuccess {String} type Type of the issue.
+ * @apiSuccess {String}                 type                    Type of the issue (according to a list).
+ * @apiSuccess {Schema.Types.ObjectId}  user                    User how are created the issue
+ * @apiSuccess {Number}                 date_created            Creation date of issue
+ * @apiSuccess {Object}                 coordonate              Coordinated the problem (longitude and latitude)
+ * @apiSuccess {String}                 coordonate.lat          Latitude coordinate
+ * @apiSuccess {String}                 coordonate.long         Longitude coordinate
+ * @apiSuccess {String}                 status                  Status of the issue
+ * @apiSuccess {[]}                     comments_user           Board with all comments of the issue
+ * @apiSuccess {Schema.Types.ObjectId}  comments_user.comment   A comment of the issue
+ * @apiSuccess {[]}                     action                  Board with all actions of the issue
+ * @apiSuccess {Number}                 action.date             Creation date of action
+ * @apiSuccess {String}                 action.action           Definition of the action
+ * @apiSuccess {Schema.Types.ObjectId}  action.comment          A comment of the action
+ * @apiSuccess {[]}                     tags                    Board with all tags of the issue
+ * @apiSuccess {String}                 tags.name               Name of the tag
  */
 router.post('/', function (req, res, next) { //chemin relatif a "api/people"
 //res.send("Hello World!");
@@ -115,7 +130,7 @@ router.post('/', function (req, res, next) { //chemin relatif a "api/people"
  * @api {get} /issues Get all the Issues
  * @apiVersion 0.0.0
  * @apiName GetIssues
- * @apiGroup Issue
+ * @apiGroup Issues
  *
  * @apiDescription This allow to get all the issues
  *
