@@ -95,7 +95,10 @@ function findMatchingIssues(callback) {
  * @apiExample Example usage:
  * http://localhost/api/issues/
  *
+ * @apiParam {String} description The Description of the comments.
  *
+ *
+ * @apiSuccess {String}                 description             Description of the issue.
  * @apiSuccess {String}                 type                    Type of the issue (according to a list).
  * @apiSuccess {Schema.Types.ObjectId}  user                    User how are created the issue
  * @apiSuccess {Number}                 date_created            Creation date of issue
@@ -109,48 +112,10 @@ function findMatchingIssues(callback) {
  * @apiSuccess {Number}                 action.date             Creation date of action
  * @apiSuccess {String}                 action.action           Definition of the action
  * @apiSuccess {Schema.Types.ObjectId}  action.comment          A comment of the action
+ * @apiSuccess {Boolean}                action.current                 If the action is the current = true
  * @apiSuccess {[]}                     tags                    Board with all tags of the issue
  * @apiSuccess {String}                 tags.name               Name of the tag
- */
-router.post('/', function (req, res, next) { //chemin relatif a "api/people"
-//res.send("Hello World!");
-
-    var issue = new Issue(req.body);
-
-    issue.save(function (err, createdIssue) {
-        if (err) {
-            res.status(500).send(err); // pas propre car donne infos au client
-            return; //arrête la fonction. ATTENTION - LE METTRE car sinon CRASH du serveur
-        }
-        res.send(createdIssue);
-    });
-
-});
-/**
- * @api {get} /issues Get all the Issues
- * @apiVersion 0.0.0
- * @apiName GetIssues
- * @apiGroup Issues
  *
- * @apiDescription This allow to get all the issues
- *
- * @apiExample Example usage:
- * http://localhost/api/issues
- *
- * @apiSuccess {Schema.Types.ObjectId}   author            The Author-Id who create the Issue
- * @apiSuccess {Schema.Types.ObjectId} type     The Type-Id of the Issue
- * @apiSuccess {Schema.Types.ObjectId[]}   tags       The Tag-Id related to the Issue
- * @apiSuccess {String}   description   The description of the Issue
- * @apiSuccess {String}   location The type of the geographic coordinates
- * @apiSuccess {Number[]} location.coordinates       The geographic coordinates of the Issue
- * @apiSuccess {String}   status  The status of the Issue
- * @apiSuccess {[]}   actions The actions done on the Issue
- * @apiSuccess {String}   actions.type The type of the action (Comment or Status Change)
- * @apiSuccess {Schema.Types.ObjectId}   actions.author The Author-Id of the action
- * @apiSuccess {Date}   actions.date The date of the action
- * @apiSuccess {String}   actions.status The new status of the issue (only if its a Status Change)
- * @apiSuccess {String}   actions.content The content of the comment (only if its a Comment)
- * @apiSuccess {Date}   createdAt The date of creation of the issue
  *
  * @apiError UnexpectedToken The issue has some parameters with uncorrect type
  * @apiError ValidationError There are missing parameters
@@ -178,7 +143,84 @@ router.post('/', function (req, res, next) { //chemin relatif a "api/people"
     }
   }
 }
+ */
+
+router.post('/', function (req, res, next) { //chemin relatif a "api/people"
+//res.send("Hello World!");
+
+    var issue = new Issue(req.body);
+
+    issue.save(function (err, createdIssue) {
+        if (err) {
+            res.status(500).send(err); // pas propre car donne infos au client
+            return; //arrête la fonction. ATTENTION - LE METTRE car sinon CRASH du serveur
+        }
+        res.send(createdIssue);
+    });
+
+});
+
+
+
+/**
+ * @api {get} /issues Get all issues
+ * @apiVersion 0.0.0
+ * @apiName GetAllIssue
+ * @apiGroup Issues
  *
+ * @apiDescription  it's function can recover all the issues
+ *
+ * @apiExample Example usage:
+ * http://localhost/api/issues/
+ *
+ * @apiParam {String}                   description             The Description of the comments.
+ *
+ *
+ * @apiSuccess {String}                 description             Description of the issue.
+ * @apiSuccess {String}                 type                    Type of the issue (according to a list).
+ * @apiSuccess {Schema.Types.ObjectId}  user                    User how are created the issue
+ * @apiSuccess {Number}                 date_created            Creation date of issue
+ * @apiSuccess {Object}                 coordonate              Coordinated the problem (longitude and latitude)
+ * @apiSuccess {String}                 coordonate.lat          Latitude coordinate
+ * @apiSuccess {String}                 coordonate.long         Longitude coordinate
+ * @apiSuccess {String}                 status                  Status of the issue
+ * @apiSuccess {[]}                     comments_user           Board with all comments of the issue
+ * @apiSuccess {Schema.Types.ObjectId}  comments_user.comment   A comment of the issue
+ * @apiSuccess {[]}                     action                  Board with all actions of the issue
+ * @apiSuccess {Number}                 action.date             Creation date of action
+ * @apiSuccess {String}                 action.action           Definition of the action
+ * @apiSuccess {Schema.Types.ObjectId}  action.comment          A comment of the action
+ * @apiSuccess {Boolean}                action.current                 If the action is the current = true
+ * @apiSuccess {[]}                     tags                    Board with all tags of the issue
+ * @apiSuccess {String}                 tags.name               Name of the tag
+ *
+ *
+ * @apiError UnexpectedToken The issue has some parameters with uncorrect type
+ * @apiError ValidationError There are missing parameters
+ * @apiError Error404   The server has an unexpected error
+ *
+ * @apiErrorExample Response (Unexpected Token):
+ *    <h1>Unexpected token j</h1>
+ <h2>400</h2>
+ <pre>SyntaxError: Unexpected token j
+ *
+ * @apiErrorExample {json} Response (Validation Error):
+ * {"message": "Issue validation failed",
+  "name": "ValidationError",
+  "errors": {
+    "description": {
+      "properties": {
+        "type": "required",
+        "message": "Path `{PATH}` is required.",
+        "path": "description"
+      },
+      "message": "Path `description` is required.",
+      "name": "ValidatorError",
+      "kind": "required",
+      "path": "description"
+    }
+  }
+}
  */
 
 /**

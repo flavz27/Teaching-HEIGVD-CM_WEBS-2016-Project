@@ -6,6 +6,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var IssueSchema = new Schema({
+    description: {type: String, required: true},
     type: {type: String, required: true},
     user: {
         type: Schema.Types.ObjectId,
@@ -23,7 +24,7 @@ var IssueSchema = new Schema({
         {
             comment: {
                 type: Schema.Types.ObjectId,
-                required: true,
+                required: false,
                 ref: "Comment", //mongoose sait que c'est une référence à un autre modèèle. Methode "populate" TODO maj
             },
 
