@@ -140,14 +140,15 @@ router.get('/', function (req, res, next) {
 
 /**
  * modify a comment
- * OKAY TESTED
+ *
  * */
-
+// TODO: not working anymore... WHYY????? idk
  router.put('/:id', findComment, function(req, res) {
 
   // Update the description.
   req.description = req.body.description;
 
+     req.comment.markModified('description');
 
   // Save the comment.
   req.comment.save(function(err, updatedComment) {
