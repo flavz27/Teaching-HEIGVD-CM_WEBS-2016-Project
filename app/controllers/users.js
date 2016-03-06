@@ -262,6 +262,51 @@ router.get('/', function (req, res, next) {
     });
 });
 
+
+
+/**
+ * @api {get} /users/:id Get all user
+ * @apiVersion 0.0.0
+ * @apiName GetUser
+ * @apiGroup Users
+ *
+ * @apiDescription This route can gets a specific user based on id.
+ *
+ * @apiExample Example usage:
+ * http://localhost/api/users/56ced66daa89b1aa47ed6a46
+ *
+ * @apiParam {Number}   id            The Users-ID.
+ *
+ *
+ *
+ * @apiSuccess {Number}   id            The Users-ID.
+ * @apiSuccess {Boolean}  citizen       true if the user is a citizen false if not.
+ * @apiSuccess {Boolean}  staff         true if the user is a staff false if not.
+ * @apiSuccess {String}   username      Pseudo of the user.
+ *
+ *
+ *
+ * @apiError NotFound There are not user with this id
+ * @apiError NotValid The request is not valid
+ * @apiError Error404   The server has an unexpected error
+ *
+ * @apiErrorExample Response (Not Found):
+ *
+ user not found
+ *
+ * @apiErrorExample Response (Not Valid):
+ *
+ {
+   "message": "Cast to ObjectId failed for value \"null=56dae5ce12916cf4357035c6\" at path \"_id\"",
+   "name": "CastError",
+   "kind": "ObjectId",
+   "value": "null=56dae5ce12916cf4357035c6",
+   "path": "_id"
+ }
+ *
+ *
+ */
+
 /**
  * gets a specific user based on id
  **/
