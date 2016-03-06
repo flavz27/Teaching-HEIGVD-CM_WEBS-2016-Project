@@ -75,45 +75,20 @@ module.exports = function (app) {
  *
  *
  *
- * @apiError UnexpectedToken The issue has some parameters with uncorrect type
+ * @apiError UnexpectedToken The user has some parameters with uncorrect type
  * @apiError ValidationError There are missing parameters
  * @apiError Error404   The server has an unexpected error
  *
  * @apiErrorExample Response (Unexpected Token):
- *<!DOCTYPE html>
- *  <html lang="en">
- *      <head>
- *          <title>error</title>
- *          <link rel="stylesheet" href="/css/style.css">
- *          <script src="http://localhost:35729/livereload.js"></script>
- *      </head>
- *      <body>
- *          <h1>Unexpected token }</h1>
- *          <h2>400</h2>
- *          <pre>SyntaxError: Unexpected token }</pre>
- *      </body>
- *  </html>
  *
- *
+ *    <h1>Unexpected token j</h1>
+ <h2>400</h2>
+ <pre>SyntaxError: Unexpected token j
  *
  * @apiErrorExample {json} Response (Validation Error):
- *
- * {"message": "Issue validation failed",
-  "name": "ValidationError",
-  "errors": {
-    "description": {
-      "properties": {
-        "type": "required",
-        "message": "Path `{PATH}` is required.",
-        "path": "description"
-      },
-      "message": "Path `description` is required.",
-      "name": "ValidatorError",
-      "kind": "required",
-      "path": "description"
-    }
-  }
-}
+ *    <h1>Unexpected token j</h1>
+ <h2>400</h2>
+ <pre>SyntaxError: Unexpected token j
  *
  */
 
@@ -137,44 +112,43 @@ router.post('/', function (req, res, next) { //chemin relatif a "api/people"
  ID Flavia: 56ced63b3376c594473ab8c2
  ID Sabine: 56ced66daa89b1aa47ed6a46
  */
-/**
- * Get all citizens
- */
+
+
 
 
 /**
- * @api {get} /users/citizens Get every user how are a citizen.
+ * @api {get} /users/citizens Get all citizens
  * @apiVersion 0.0.0
- * @apiName GetCitizen
+ * @apiName GetUserCitizen
  * @apiGroup Users
- * @apiPermission admin
  *
- * @apiDescription This route can get every user how are the field citizen with 1.
- *
- *
- * @apiParam {Number} id The Users-ID.
+ * @apiDescription This route can get all user how are citizen (with boolean citizen true).
  *
  * @apiExample Example usage:
- * curl -i http://localhost/user/4711
+ * http://localhost/api/users/citizens
+ *
+ * @apiParam {String}       username       The username of the user.
+ *
  *
  *
  * @apiSuccess {Number}   id            The Users-ID.
- * @apiSuccess {Boolean}  citizen       1 if the user is a citizen 0 if not.
- * @apiSuccess {Boolean}  staff         1 if the user is a staff 0 if not.
+ * @apiSuccess {Boolean}  citizen       true if the user is a citizen false if not.
+ * @apiSuccess {Boolean}  staff         true if the user is a staff false if not.
  * @apiSuccess {String}   username      Pseudo of the user.
  *
  *
- * @apiError NoAccessRight Only authenticated Admins can access the data.
- * @apiError UserNotFound   The <code>id</code> of the User was not found.
  *
- * @apiErrorExample Response (example):
- *     HTTP/1.1 401 Not Authenticated
- *     {
- *       "error": "NoAccessRight"
- *     }
+ * @apiError NotFound There are not users with this parameters
+ * @apiError Error404   The server has an unexpected error
+ *
+ * @apiErrorExample Response (Not Found):
+ *
+ *    <h1>Unexpected token j</h1>
+ <h2>400</h2>
+ <pre>SyntaxError: Unexpected token j
+ *
  *
  */
-
 
 router.get('/citizens', function (req, res, next) {
     /*res.send("Hello World!");*/
@@ -193,38 +167,37 @@ router.get('/citizens', function (req, res, next) {
     });
 });
 
-
 /**
- * @api {get} /users/staffs Get all staff.
+ * @api {get} /users/staffs Get all staffs
  * @apiVersion 0.0.0
- * @apiName GetStaff
+ * @apiName GetUserStaff
  * @apiGroup Users
- * @apiPermission admin
  *
- * @apiDescription This route can get every user how are the field staff with 1.
- *
- *
- * @apiParam {Number} id The Users-ID.
- *
+ * @apiDescription This route can get all user how are staff (with boolean staff true).
  *
  * @apiExample Example usage:
- * curl -i http://localhost/user/4711
+ * http://localhost/api/users/staffs
+ *
+ * @apiParam {String}       username       The username of the user.
+ *
  *
  *
  * @apiSuccess {Number}   id            The Users-ID.
- * @apiSuccess {Boolean}  citizen       1 if the user is a citizen 0 if not.
- * @apiSuccess {Boolean}  staff         1 if the user is a staff 0 if not.
+ * @apiSuccess {Boolean}  citizen       true if the user is a citizen false if not.
+ * @apiSuccess {Boolean}  staff         true if the user is a staff false if not.
  * @apiSuccess {String}   username      Pseudo of the user.
  *
  *
- * @apiError NoAccessRight Only authenticated Admins can access the data.
- * @apiError UserNotFound   The <code>id</code> of the User was not found.
  *
- * @apiErrorExample Response (example):
- *     HTTP/1.1 401 Not Authenticated
- *     {
- *       "error": "NoAccessRight"
- *     }
+ * @apiError NotFound There are not users with this parameters
+ * @apiError Error404   The server has an unexpected error
+ *
+ * @apiErrorExample Response (Not Found):
+ *    <h1>Unexpected token j</h1>
+ <h2>400</h2>
+ <pre>SyntaxError: Unexpected token j
+ *
+ *
  *
  */
 

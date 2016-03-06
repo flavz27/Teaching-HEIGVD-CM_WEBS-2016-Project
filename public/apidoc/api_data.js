@@ -920,36 +920,31 @@ define({ "api": [
   {
     "type": "get",
     "url": "/users/citizens",
-    "title": "Get every user how are a citizen.",
+    "title": "Get all citizens",
     "version": "0.0.0",
-    "name": "GetCitizen",
+    "name": "GetUserCitizen",
     "group": "Users",
-    "permission": [
+    "description": "<p>This route can get all user how are citizen (with boolean citizen true).</p>",
+    "examples": [
       {
-        "name": "admin"
+        "title": "Example usage:",
+        "content": "http://localhost/api/users/citizens",
+        "type": "json"
       }
     ],
-    "description": "<p>This route can get every user how are the field citizen with 1.</p>",
     "parameter": {
       "fields": {
         "Parameter": [
           {
             "group": "Parameter",
-            "type": "Number",
+            "type": "String",
             "optional": false,
-            "field": "id",
-            "description": "<p>The Users-ID.</p>"
+            "field": "username",
+            "description": "<p>The username of the user.</p>"
           }
         ]
       }
     },
-    "examples": [
-      {
-        "title": "Example usage:",
-        "content": "curl -i http://localhost/user/4711",
-        "type": "json"
-      }
-    ],
     "success": {
       "fields": {
         "Success 200": [
@@ -965,14 +960,14 @@ define({ "api": [
             "type": "Boolean",
             "optional": false,
             "field": "citizen",
-            "description": "<p>1 if the user is a citizen 0 if not.</p>"
+            "description": "<p>true if the user is a citizen false if not.</p>"
           },
           {
             "group": "Success 200",
             "type": "Boolean",
             "optional": false,
             "field": "staff",
-            "description": "<p>1 if the user is a staff 0 if not.</p>"
+            "description": "<p>true if the user is a staff false if not.</p>"
           },
           {
             "group": "Success 200",
@@ -990,21 +985,21 @@ define({ "api": [
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "NoAccessRight",
-            "description": "<p>Only authenticated Admins can access the data.</p>"
+            "field": "NotFound",
+            "description": "<p>There are not users with this parameters</p>"
           },
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "UserNotFound",
-            "description": "<p>The <code>id</code> of the User was not found.</p>"
+            "field": "Error404",
+            "description": "<p>The server has an unexpected error</p>"
           }
         ]
       },
       "examples": [
         {
-          "title": "Response (example):",
-          "content": "HTTP/1.1 401 Not Authenticated\n{\n  \"error\": \"NoAccessRight\"\n}",
+          "title": "Response (Not Found):",
+          "content": "\n  <h1>Unexpected token j</h1>\n<h2>400</h2>\n<pre>SyntaxError: Unexpected token j",
           "type": "json"
         }
       ]
@@ -1015,36 +1010,31 @@ define({ "api": [
   {
     "type": "get",
     "url": "/users/staffs",
-    "title": "Get all staff.",
+    "title": "Get all staffs",
     "version": "0.0.0",
-    "name": "GetStaff",
+    "name": "GetUserStaff",
     "group": "Users",
-    "permission": [
+    "description": "<p>This route can get all user how are staff (with boolean staff true).</p>",
+    "examples": [
       {
-        "name": "admin"
+        "title": "Example usage:",
+        "content": "http://localhost/api/users/staffs",
+        "type": "json"
       }
     ],
-    "description": "<p>This route can get every user how are the field staff with 1.</p>",
     "parameter": {
       "fields": {
         "Parameter": [
           {
             "group": "Parameter",
-            "type": "Number",
+            "type": "String",
             "optional": false,
-            "field": "id",
-            "description": "<p>The Users-ID.</p>"
+            "field": "username",
+            "description": "<p>The username of the user.</p>"
           }
         ]
       }
     },
-    "examples": [
-      {
-        "title": "Example usage:",
-        "content": "curl -i http://localhost/user/4711",
-        "type": "json"
-      }
-    ],
     "success": {
       "fields": {
         "Success 200": [
@@ -1060,14 +1050,14 @@ define({ "api": [
             "type": "Boolean",
             "optional": false,
             "field": "citizen",
-            "description": "<p>1 if the user is a citizen 0 if not.</p>"
+            "description": "<p>true if the user is a citizen false if not.</p>"
           },
           {
             "group": "Success 200",
             "type": "Boolean",
             "optional": false,
             "field": "staff",
-            "description": "<p>1 if the user is a staff 0 if not.</p>"
+            "description": "<p>true if the user is a staff false if not.</p>"
           },
           {
             "group": "Success 200",
@@ -1085,21 +1075,21 @@ define({ "api": [
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "NoAccessRight",
-            "description": "<p>Only authenticated Admins can access the data.</p>"
+            "field": "NotFound",
+            "description": "<p>There are not users with this parameters</p>"
           },
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "UserNotFound",
-            "description": "<p>The <code>id</code> of the User was not found.</p>"
+            "field": "Error404",
+            "description": "<p>The server has an unexpected error</p>"
           }
         ]
       },
       "examples": [
         {
-          "title": "Response (example):",
-          "content": "HTTP/1.1 401 Not Authenticated\n{\n  \"error\": \"NoAccessRight\"\n}",
+          "title": "Response (Not Found):",
+          "content": "  <h1>Unexpected token j</h1>\n<h2>400</h2>\n<pre>SyntaxError: Unexpected token j",
           "type": "json"
         }
       ]
@@ -1176,7 +1166,7 @@ define({ "api": [
             "group": "Error 4xx",
             "optional": false,
             "field": "UnexpectedToken",
-            "description": "<p>The issue has some parameters with uncorrect type</p>"
+            "description": "<p>The user has some parameters with uncorrect type</p>"
           },
           {
             "group": "Error 4xx",
@@ -1195,12 +1185,12 @@ define({ "api": [
       "examples": [
         {
           "title": "Response (Unexpected Token):",
-          "content": "<!DOCTYPE html>\n <html lang=\"en\">\n     <head>\n         <title>error</title>\n         <link rel=\"stylesheet\" href=\"/css/style.css\">\n         <script src=\"http://localhost:35729/livereload.js\"></script>\n     </head>\n     <body>\n         <h1>Unexpected token }</h1>\n         <h2>400</h2>\n         <pre>SyntaxError: Unexpected token }</pre>\n     </body>\n </html>",
+          "content": "\n  <h1>Unexpected token j</h1>\n<h2>400</h2>\n<pre>SyntaxError: Unexpected token j",
           "type": "json"
         },
         {
           "title": "Response (Validation Error):",
-          "content": "\n{\"message\": \"Issue validation failed\",\n  \"name\": \"ValidationError\",\n  \"errors\": {\n    \"description\": {\n      \"properties\": {\n        \"type\": \"required\",\n        \"message\": \"Path `{PATH}` is required.\",\n        \"path\": \"description\"\n      },\n      \"message\": \"Path `description` is required.\",\n      \"name\": \"ValidatorError\",\n      \"kind\": \"required\",\n      \"path\": \"description\"\n    }\n  }\n}",
+          "content": "  <h1>Unexpected token j</h1>\n<h2>400</h2>\n<pre>SyntaxError: Unexpected token j",
           "type": "json"
         }
       ]
