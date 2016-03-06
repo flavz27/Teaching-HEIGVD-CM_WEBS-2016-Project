@@ -1,6 +1,96 @@
 define({ "api": [
   {
     "type": "get",
+    "url": "/comments/id",
+    "title": "Get a comment",
+    "version": "0.0.0",
+    "name": "GetComment",
+    "group": "Comments",
+    "description": "<p>This route can gets a specific comment with id.</p>",
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "http://localhost/api/comments/56dbf15c1ed727f82d272ce2",
+        "type": "json"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>The Comments-ID.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>The Comments-ID.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "date_created",
+            "description": "<p>Creation Date.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "description",
+            "description": "<p>Description of the Comment.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Schema.Types.ObjectId",
+            "optional": false,
+            "field": "user",
+            "description": "<p>User-ID how are edit the comment.</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound",
+            "description": "<p>There are not comments</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "Error404",
+            "description": "<p>The server has an unexpected error</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (Not Found):",
+          "content": "\n[]",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "app/controllers/comments.js",
+    "groupTitle": "Comments"
+  },
+  {
+    "type": "get",
     "url": "/comments",
     "title": "Read all comments",
     "version": "0.0.0",
@@ -94,11 +184,14 @@ define({ "api": [
     "url": "/comments",
     "title": "Create a comment",
     "version": "0.0.0",
-    "name": "PostComment",
+    "name": "GetComments",
     "group": "Comments",
-    "permission": [
+    "description": "<p>This route can gets all comments are editing in the application. This route isn't used but we have make it because thi is the base command.</p>",
+    "examples": [
       {
-        "name": "user"
+        "title": "Example usage:",
+        "content": "http://localhost/api/comments",
+        "type": "json"
       }
     ],
     "parameter": {
@@ -140,13 +233,49 @@ define({ "api": [
           },
           {
             "group": "Success 200",
-            "type": "Number",
+            "type": "Schema.Types.ObjectId",
             "optional": false,
             "field": "user",
             "description": "<p>User-ID how are edit the comment.</p>"
           }
         ]
       }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UnexpectedToken",
+            "description": "<p>The user has some parameters with uncorrect type</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ValidationError",
+            "description": "<p>There are missing parameters</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "Error404",
+            "description": "<p>The server has an unexpected error</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (Unexpected Token):",
+          "content": "\n  <h1>Unexpected token j</h1>\n<h2>400</h2>\n<pre>SyntaxError: Unexpected token j",
+          "type": "json"
+        },
+        {
+          "title": "Response (Validation Error):",
+          "content": "{\n  \"message\": \"Comment validation failed\",\n  \"name\": \"ValidationError\",\n  \"errors\": {\n    \"user\": {\n      \"properties\": {\n        \"type\": \"required\",\n        \"message\": \"Path `{PATH}` is required.\",\n        \"path\": \"user\"\n      },\n      \"message\": \"Path `user` is required.\",\n      \"name\": \"ValidatorError\",\n      \"kind\": \"required\",\n      \"path\": \"user\"\n    },\n    \"description\": {\n      \"properties\": {\n        \"type\": \"required\",\n        \"message\": \"Path `{PATH}` is required.\",\n        \"path\": \"description\"\n      },\n      \"message\": \"Path `description` is required.\",\n      \"name\": \"ValidatorError\",\n      \"kind\": \"required\",\n      \"path\": \"description\"\n    },\n    \"date_created\": {\n      \"properties\": {\n        \"type\": \"required\",\n        \"message\": \"Path `{PATH}` is required.\",\n        \"path\": \"date_created\"\n      },\n      \"message\": \"Path `date_created` is required.\",\n      \"name\": \"ValidatorError\",\n      \"kind\": \"required\",\n      \"path\": \"date_created\"\n    }\n  }\n}",
+          "type": "json"
+        }
+      ]
     },
     "filename": "app/controllers/comments.js",
     "groupTitle": "Comments"

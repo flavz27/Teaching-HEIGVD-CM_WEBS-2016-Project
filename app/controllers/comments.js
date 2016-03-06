@@ -89,19 +89,74 @@ router.get('/', function (req, res, next) {
 /**
  * @api {post} /comments Create a comment
  * @apiVersion 0.0.0
- * @apiName PostComment
+ * @apiName GetComments
  * @apiGroup Comments
- * @apiPermission user
  *
+ * @apiDescription This route can gets all comments are editing in the application. This route isn't used but we have make it because thi is the base command.
+ *
+ * @apiExample Example usage:
+ * http://localhost/api/comments
  *
  * @apiParam {String} description The Description of the comments.
  *
  *
- * @apiSuccess {Number}   id            The Comments-ID.
- * @apiSuccess {Number}   date_created  Creation Date.
- * @apiSuccess {String}   description   Description of the Comment.
- * @apiSuccess {Number}   user          User-ID how are edit the comment.
+ * @apiSuccess {Number}                     id            The Comments-ID.
+ * @apiSuccess {Number}                     date_created  Creation Date.
+ * @apiSuccess {String}                     description   Description of the Comment.
+ * @apiSuccess {Schema.Types.ObjectId}      user          User-ID how are edit the comment.
  *
+ *
+ *
+ * @apiError UnexpectedToken The user has some parameters with uncorrect type
+ * @apiError ValidationError There are missing parameters
+ * @apiError Error404   The server has an unexpected error
+ *
+ * @apiErrorExample Response (Unexpected Token):
+ *
+ *    <h1>Unexpected token j</h1>
+ <h2>400</h2>
+ <pre>SyntaxError: Unexpected token j
+ *
+ * @apiErrorExample {json} Response (Validation Error):
+ {
+   "message": "Comment validation failed",
+   "name": "ValidationError",
+   "errors": {
+     "user": {
+       "properties": {
+         "type": "required",
+         "message": "Path `{PATH}` is required.",
+         "path": "user"
+       },
+       "message": "Path `user` is required.",
+       "name": "ValidatorError",
+       "kind": "required",
+       "path": "user"
+     },
+     "description": {
+       "properties": {
+         "type": "required",
+         "message": "Path `{PATH}` is required.",
+         "path": "description"
+       },
+       "message": "Path `description` is required.",
+       "name": "ValidatorError",
+       "kind": "required",
+       "path": "description"
+     },
+     "date_created": {
+       "properties": {
+         "type": "required",
+         "message": "Path `{PATH}` is required.",
+         "path": "date_created"
+       },
+       "message": "Path `date_created` is required.",
+       "name": "ValidatorError",
+       "kind": "required",
+       "path": "date_created"
+     }
+   }
+ }
  *
  */
 
@@ -122,8 +177,36 @@ router.post('/', function (req, res, next) { //chemin relatif a "api/people"
 
 
 /**
- * get a comment
+ * @api {get} /comments/id  Get a comment
+ * @apiVersion 0.0.0
+ * @apiName GetComment
+ * @apiGroup Comments
+ *
+ * @apiDescription This route can gets a specific comment with id.
+ *
+ * @apiExample Example usage:
+ * http://localhost/api/comments/56dbf15c1ed727f82d272ce2
+ *
+ * @apiParam {Number}                     id            The Comments-ID.
+ *
+ *
+ * @apiSuccess {Number}                     id            The Comments-ID.
+ * @apiSuccess {Number}                     date_created  Creation Date.
+ * @apiSuccess {String}                     description   Description of the Comment.
+ * @apiSuccess {Schema.Types.ObjectId}      user          User-ID how are edit the comment.
+ *
+ *
+ *
+ * @apiError NotFound There are not comments
+ * @apiError Error404   The server has an unexpected error
+ *
+ * @apiErrorExample Response (Not Found):
+ *
+ []
+ *
  */
+
+
 router.get('/:id', findComment, function (req, res, next) {
     res.send(req.comment);
 });
