@@ -213,9 +213,44 @@ router.get('/staffs', function (req, res, next) {
         res.send(users);
     });
 });
+
+
+
+
 /**
- * gets all users
+ * @api {get} /users Get all users
+ * @apiVersion 0.0.0
+ * @apiName GetUsers
+ * @apiGroup Users
+ *
+ * @apiDescription This route can get all users.
+ *
+ * @apiExample Example usage:
+ * http://localhost/api/users
+ *
+ * @apiParam {String}       username       The username of the user.
+ *
+ *
+ *
+ * @apiSuccess {Number}   id            The Users-ID.
+ * @apiSuccess {Boolean}  citizen       true if the user is a citizen false if not.
+ * @apiSuccess {Boolean}  staff         true if the user is a staff false if not.
+ * @apiSuccess {String}   username      Pseudo of the user.
+ *
+ *
+ *
+ * @apiError NotFound There are not users with this parameters
+ * @apiError Error404   The server has an unexpected error
+ *
+ * @apiErrorExample Response (Not Found):
+ *
+ *    <h1>Unexpected token j</h1>
+ <h2>400</h2>
+ <pre>SyntaxError: Unexpected token j
+ *
+ *
  */
+
 router.get('/', function (req, res, next) {
     User.find(function (err, users) {
         if (err) {

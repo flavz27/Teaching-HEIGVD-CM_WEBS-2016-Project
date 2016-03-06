@@ -1098,6 +1098,96 @@ define({ "api": [
     "groupTitle": "Users"
   },
   {
+    "type": "get",
+    "url": "/users",
+    "title": "Get all users",
+    "version": "0.0.0",
+    "name": "GetUsers",
+    "group": "Users",
+    "description": "<p>This route can get all users.</p>",
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "http://localhost/api/users",
+        "type": "json"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>The username of the user.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>The Users-ID.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "citizen",
+            "description": "<p>true if the user is a citizen false if not.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "staff",
+            "description": "<p>true if the user is a staff false if not.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>Pseudo of the user.</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound",
+            "description": "<p>There are not users with this parameters</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "Error404",
+            "description": "<p>The server has an unexpected error</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (Not Found):",
+          "content": "\n  <h1>Unexpected token j</h1>\n<h2>400</h2>\n<pre>SyntaxError: Unexpected token j",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "app/controllers/users.js",
+    "groupTitle": "Users"
+  },
+  {
     "type": "post",
     "url": "/users",
     "title": "Create an user",
