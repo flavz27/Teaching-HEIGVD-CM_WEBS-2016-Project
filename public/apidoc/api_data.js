@@ -1177,6 +1177,107 @@ define({ "api": [
   },
   {
     "type": "get",
+    "url": "/users/:id/issues",
+    "title": "Get all issues",
+    "version": "0.0.0",
+    "name": "GetUserIssues",
+    "group": "Users",
+    "description": "<p>This route can gets a specific user based on id with his issues.</p>",
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "http://localhost/api/users/56ced66daa89b1aa47ed6a46/issues",
+        "type": "json"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>The Users-ID.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>The Users-ID.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "citizen",
+            "description": "<p>true if the user is a citizen false if not.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "staff",
+            "description": "<p>true if the user is a staff false if not.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>Pseudo of the user.</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound",
+            "description": "<p>There are not user with this id</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotValid",
+            "description": "<p>The request is not valid</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "Error404",
+            "description": "<p>The server has an unexpected error</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (Not Found):",
+          "content": "\nuser not found",
+          "type": "json"
+        },
+        {
+          "title": "Response (Not Valid):",
+          "content": "\n{\n  \"message\": \"Cast to ObjectId failed for value \\\"null=56dae5ce12916cf4357035c6\\\" at path \\\"_id\\\"\",\n  \"name\": \"CastError\",\n  \"kind\": \"ObjectId\",\n  \"value\": \"null=56dae5ce12916cf4357035c6\",\n  \"path\": \"_id\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "app/controllers/users.js",
+    "groupTitle": "Users"
+  },
+  {
+    "type": "get",
     "url": "/users/staffs",
     "title": "Get all staffs",
     "version": "0.0.0",
