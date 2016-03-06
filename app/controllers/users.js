@@ -265,7 +265,7 @@ router.get('/', function (req, res, next) {
 
 
 /**
- * @api {get} /users/:id Get all user
+ * @api {get} /users/:id Get one user
  * @apiVersion 0.0.0
  * @apiName GetUser
  * @apiGroup Users
@@ -307,12 +307,53 @@ router.get('/', function (req, res, next) {
  *
  */
 
-/**
- * gets a specific user based on id
- **/
+
 router.get('/:id', findUser, function (req, res, next) {
     res.send(req.user);
 });
+
+
+/**
+ * @api {delete} /users/:id Delete one user
+ * @apiVersion 0.0.0
+ * @apiName DeleteUser
+ * @apiGroup Users
+ *
+ * @apiDescription This route can delete a specific user based on id.
+ *
+ * @apiExample Example usage:
+ * http://localhost/api/users/56ced66daa89b1aa47ed6a46
+ *
+ * @apiParam {Number}   id            The Users-ID.
+ *
+ *
+ *
+ *
+ *
+ *
+ * @apiError NotFound There are not user with this id
+ * @apiError NotValid The request is not valid
+ * @apiError Error404   The server has an unexpected error
+ *
+ * @apiErrorExample Response (Not Found):
+ *
+ user not found
+ *
+ * @apiErrorExample Response (Not Valid):
+ *
+ {
+   "message": "Cast to ObjectId failed for value \"null=56dae5ce12916cf4357035c6\" at path \"_id\"",
+   "name": "CastError",
+   "kind": "ObjectId",
+   "value": "null=56dae5ce12916cf4357035c6",
+   "path": "_id"
+ }
+ *
+ *
+ */
+
+
+
 
 /**
  * deletes a user
