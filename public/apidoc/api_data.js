@@ -1,5 +1,72 @@
 define({ "api": [
   {
+    "type": "delete",
+    "url": "/comments/id",
+    "title": "Delete a comment",
+    "version": "0.0.0",
+    "name": "DeleteComment",
+    "group": "Comments",
+    "description": "<p>This route can delete a specific comment with id.</p>",
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "http://localhost/api/comments/56dbf15c1ed727f82d272ce2",
+        "type": "json"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>The Comments-ID.</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound",
+            "description": "<p>There are not comment with this id</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotValid",
+            "description": "<p>The request is not valid</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "Error404",
+            "description": "<p>The server has an unexpected error</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (Not Found):",
+          "content": "\nuser not found",
+          "type": "json"
+        },
+        {
+          "title": "Response (Not Valid):",
+          "content": "\n{\n  \"message\": \"Cast to ObjectId failed for value \\\"null=56dae5ce12916cf4357035c6\\\" at path \\\"_id\\\"\",\n  \"name\": \"CastError\",\n  \"kind\": \"ObjectId\",\n  \"value\": \"null=56dae5ce12916cf4357035c6\",\n  \"path\": \"_id\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "app/controllers/comments.js",
+    "groupTitle": "Comments"
+  },
+  {
     "type": "get",
     "url": "/comments/id",
     "title": "Get a comment",
@@ -184,7 +251,7 @@ define({ "api": [
     "url": "/comments",
     "title": "Create a comment",
     "version": "0.0.0",
-    "name": "GetComments",
+    "name": "PostComments",
     "group": "Comments",
     "description": "<p>This route can gets all comments are editing in the application. This route isn't used but we have make it because thi is the base command.</p>",
     "examples": [

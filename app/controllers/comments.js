@@ -89,7 +89,7 @@ router.get('/', function (req, res, next) {
 /**
  * @api {post} /comments Create a comment
  * @apiVersion 0.0.0
- * @apiName GetComments
+ * @apiName PostComments
  * @apiGroup Comments
  *
  * @apiDescription This route can gets all comments are editing in the application. This route isn't used but we have make it because thi is the base command.
@@ -211,6 +211,10 @@ router.get('/:id', findComment, function (req, res, next) {
     res.send(req.comment);
 });
 
+
+
+
+
 /**
  * returns comments_user for an issue
  */
@@ -250,9 +254,45 @@ router.get('/', function (req, res, next) {
 });
 
 
+
+
 /**
- * deletes a comment
+ * @api {delete} /comments/id  Delete a comment
+ * @apiVersion 0.0.0
+ * @apiName DeleteComment
+ * @apiGroup Comments
+ *
+ * @apiDescription This route can delete a specific comment with id.
+ *
+ * @apiExample Example usage:
+ * http://localhost/api/comments/56dbf15c1ed727f82d272ce2
+ *
+ * @apiParam {Number}                     id            The Comments-ID.
+ *
+ *
+ *
+ * @apiError NotFound There are not comment with this id
+ * @apiError NotValid The request is not valid
+ * @apiError Error404   The server has an unexpected error
+ *
+ * @apiErrorExample Response (Not Found):
+ *
+ user not found
+ *
+ * @apiErrorExample Response (Not Valid):
+ *
+ {
+   "message": "Cast to ObjectId failed for value \"null=56dae5ce12916cf4357035c6\" at path \"_id\"",
+   "name": "CastError",
+   "kind": "ObjectId",
+   "value": "null=56dae5ce12916cf4357035c6",
+   "path": "_id"
+ }
+ *
+ *
  */
+
+
 router.delete('/:id', findComment, function (req, res, next) {
     req.comment.remove(function (err) {
         if (err) {
