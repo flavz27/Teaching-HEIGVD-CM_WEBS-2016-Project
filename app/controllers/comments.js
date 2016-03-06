@@ -39,35 +39,40 @@ function findComment(req, res, next) {
 /**
  * ROUTES
  */
+
+
+
 /**
  * @api {get} /comments Read all comments
  * @apiVersion 0.0.0
  * @apiName GetComments
  * @apiGroup Comments
- * @apiPermission admin
  *
  * @apiDescription This route can gets all comments are editing in the application. This route isn't used but we have make it because thi is the base command.
  *
+ * @apiExample Example usage:
+ * http://localhost/api/comments
  *
  * @apiParam {String} description The Description of the comments.
  *
  *
- * @apiSuccess {Number}   id            The Comments-ID.
- * @apiSuccess {Number}   date_created  Creation Date.
- * @apiSuccess {String}   description   Description of the Comment.
- * @apiSuccess {Number}   user          User-ID how are edit the comment.
-
-
+ * @apiSuccess {Number}                     id            The Comments-ID.
+ * @apiSuccess {Number}                     date_created  Creation Date.
+ * @apiSuccess {String}                     description   Description of the Comment.
+ * @apiSuccess {Schema.Types.ObjectId}      user          User-ID how are edit the comment.
  *
- * @apiError NoAccessRight Only authenticated Admins can access the data.
- * @apiError UserNotFound   The <code>id</code> of the User was not found.
  *
- * @apiErrorExample Response (example):
- *     HTTP/1.1 401 Not Authenticated
- *     {
- *       "error": "NoAccessRight"
- *     }
+ *
+ * @apiError NotFound There are not comments
+ * @apiError Error404   The server has an unexpected error
+ *
+ * @apiErrorExample Response (Not Found):
+ *
+ []
+ *
  */
+
+
 
 router.get('/', function (req, res, next) {
     Comment.find(function (err, comments) {

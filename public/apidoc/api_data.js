@@ -6,12 +6,14 @@ define({ "api": [
     "version": "0.0.0",
     "name": "GetComments",
     "group": "Comments",
-    "permission": [
+    "description": "<p>This route can gets all comments are editing in the application. This route isn't used but we have make it because thi is the base command.</p>",
+    "examples": [
       {
-        "name": "admin"
+        "title": "Example usage:",
+        "content": "http://localhost/api/comments",
+        "type": "json"
       }
     ],
-    "description": "<p>This route can gets all comments are editing in the application. This route isn't used but we have make it because thi is the base command.</p>",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -51,7 +53,7 @@ define({ "api": [
           },
           {
             "group": "Success 200",
-            "type": "Number",
+            "type": "Schema.Types.ObjectId",
             "optional": false,
             "field": "user",
             "description": "<p>User-ID how are edit the comment.</p>"
@@ -65,21 +67,21 @@ define({ "api": [
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "NoAccessRight",
-            "description": "<p>Only authenticated Admins can access the data.</p>"
+            "field": "NotFound",
+            "description": "<p>There are not comments</p>"
           },
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "UserNotFound",
-            "description": "<p>The <code>id</code> of the User was not found.</p>"
+            "field": "Error404",
+            "description": "<p>The server has an unexpected error</p>"
           }
         ]
       },
       "examples": [
         {
-          "title": "Response (example):",
-          "content": "HTTP/1.1 401 Not Authenticated\n{\n  \"error\": \"NoAccessRight\"\n}",
+          "title": "Response (Not Found):",
+          "content": "\n[]",
           "type": "json"
         }
       ]
