@@ -1114,12 +1114,14 @@
     "version": "0.0.0",
     "name": "PostUser",
     "group": "Users",
-    "permission": [
+    "description": "<p>This route can create a news user with status staff or not.</p>",
+    "examples": [
       {
-        "name": "admin"
+        "title": "Example usage:",
+        "content": "http://localhost/api/users",
+        "type": "json"
       }
     ],
-    "description": "<p>This route can create a news user with status staff or not.</p>",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -1127,8 +1129,8 @@
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "description",
-            "description": "<p>The Description of the comments.</p>"
+            "field": "username",
+            "description": "<p>The username of the user.</p>"
           }
         ]
       }
@@ -1148,14 +1150,14 @@
             "type": "Boolean",
             "optional": false,
             "field": "citizen",
-            "description": "<p>1 if the user is a citizen 0 if not.</p>"
+            "description": "<p>true if the user is a citizen false if not.</p>"
           },
           {
             "group": "Success 200",
             "type": "Boolean",
             "optional": false,
             "field": "staff",
-            "description": "<p>1 if the user is a staff 0 if not.</p>"
+            "description": "<p>true if the user is a staff false if not.</p>"
           },
           {
             "group": "Success 200",
@@ -1173,21 +1175,32 @@
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "NoAccessRight",
-            "description": "<p>Only authenticated Admins can access the data.</p>"
+            "field": "UnexpectedToken",
+            "description": "<p>The issue has some parameters with uncorrect type</p>"
           },
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "UserNotFound",
-            "description": "<p>The <code>id</code> of the User was not found.</p>"
+            "field": "ValidationError",
+            "description": "<p>There are missing parameters</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "Error404",
+            "description": "<p>The server has an unexpected error</p>"
           }
         ]
       },
       "examples": [
         {
-          "title": "Response (example):",
-          "content": "HTTP/1.1 401 Not Authenticated\n{\n  \"error\": \"NoAccessRight\"\n}",
+          "title": "Response (Unexpected Token):",
+          "content": "<!DOCTYPE html>\n <html lang=\"en\">\n     <head>\n         <title>error</title>\n         <link rel=\"stylesheet\" href=\"/css/style.css\">\n         <script src=\"http://localhost:35729/livereload.js\"></script>\n     </head>\n     <body>\n         <h1>Unexpected token }</h1>\n         <h2>400</h2>\n         <pre>SyntaxError: Unexpected token }</pre>\n     </body>\n </html>",
+          "type": "json"
+        },
+        {
+          "title": "Response (Validation Error):",
+          "content": "\n{\"message\": \"Issue validation failed\",\n  \"name\": \"ValidationError\",\n  \"errors\": {\n    \"description\": {\n      \"properties\": {\n        \"type\": \"required\",\n        \"message\": \"Path `{PATH}` is required.\",\n        \"path\": \"description\"\n      },\n      \"message\": \"Path `description` is required.\",\n      \"name\": \"ValidatorError\",\n      \"kind\": \"required\",\n      \"path\": \"description\"\n    }\n  }\n}",
           "type": "json"
         }
       ]
