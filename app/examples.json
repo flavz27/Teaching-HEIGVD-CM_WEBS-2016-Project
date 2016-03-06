@@ -7,25 +7,33 @@ List of testing inputs for API
 //1. Issue
 
 {
-  "type": "test2",
+  "type": "testx1",
   "user": "56ced63b3376c594473ab8c2",
+  "description":"testing1546",
 
   "date_created": 25022016,
   "coordonate": {
     "lat": 20000001,
-    "long": 9837597345
+    "long": 20000001
   },
   "status": "in progress",
   "comments_user": [
     {
-      "comment": "0awj"
-    },
+      "comment": "56d047572eefd2286615ad5c"
+    }
+  ],
+  "action":[
     {
-      "comment": "asd98"
+
+      "date": 732016,
+      "action": "checked it out",
+
+      "current":1
     }
   ]
 
 }
+
 ;
 
 //2. User
@@ -45,5 +53,14 @@ List of testing inputs for API
 "date_created": 25022016,
 "description":" lorem ipsum bla bla bla",
 "user": "56ced63b3376c594473ab8c2"
+
+}
+
+
+//4. action //TODO not working yet
+
+{
+    "date": 732016,
+    "action": "checked it out",
 
 }

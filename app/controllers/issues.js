@@ -28,12 +28,12 @@ function findIssue(req, res, next) {
      .limit(limit);*/
 
     if (req.query.embed == 'user') {
-        query = query.populate('user'); //si dans issue ya une "FK". si on veut récupérer l'objet complet, on peut utiliser ça. Remplace ID par objet
-    } //TODO for comments as well
+        query = query.populate('user'); //TODO: not working
+    }
 
     if (req.query.embed == 'comment') {
-        query = query.populate('comments_user.comment'); //si dans issue ya une "FK". si on veut récupérer l'objet complet, on peut utiliser ça. Remplace ID par objet
-    } // TODO test
+        query = query.populate('comments_user.comment'); //Not working either... Idk why...
+    }
 
     query.exec(function (err, issue) {
         if (err) {
@@ -83,6 +83,78 @@ function findMatchingIssues(callback) {
 /**
  * ROUTES
  */
+
+/**
+ * get all issues with specific status
+ */
+router.get('/status', function (req, res, next) {
+
+    var request = req.query.data;
+    var criteria = {};
+
+    //check if the "data" is one of the statuses authorized
+    if(request == "created" | request == "inprogress" | request == "acknowledged"
+        | request == "assigned" | request == "solved" | request == "rejected"){
+        if(request == "inprogress") {
+            request = "in progress"
+        }
+       criteria.status = request;
+        Issue.find(criteria, function(err, issues){
+            if (err) {
+                res.status(500).send(err);
+                return;
+            }
+          //  query = query.populate('comments_user.comment');
+
+            var query = Issue
+
+
+            if (req.query.embed == 'comment') {
+                query = query.populate('comments_user.comment');
+            }
+            if (req.query.embed == 'user') {
+                query = query.populate('user');
+            }
+            res.send(issues);
+        });
+    } else {
+        res.status(500);
+        return;
+    } //TODO: error not working
+
+
+
+});
+
+/**
+ * add an action to issue
+ */
+router.post('/:id/actions', findIssue, function (req, res, next) {
+
+
+        // Add the action to the issue's addresses array.
+     req.issue.action.push(req.body);
+   /* req.issue.action[req.issue.action.length - 1].current = 0;*/
+
+     // Save the issue.
+     req.issue.save(function(err, updatedIssue) {
+        //changes last action to not current and new to current
+         updatedIssue.action[updatedIssue.action.length - 1].current = 1;
+         updatedIssue.action[updatedIssue.action.length-2].current = 0;
+
+     if (err) {
+     res.status(500).send(err);
+     return;
+     }
+
+
+
+     res.send({"new action": updatedIssue.action[updatedIssue.action.length - 1], "old action" : updatedIssue.action[updatedIssue.action.length-2]});
+     });
+
+
+
+});
 
 /**
  * @api {post} /issues Create an issue
@@ -144,6 +216,10 @@ function findMatchingIssues(callback) {
   }
 }
  */
+
+
+
+
 
 router.post('/', function (req, res, next) { //chemin relatif a "api/people"
 //res.send("Hello World!");
@@ -225,7 +301,7 @@ router.post('/', function (req, res, next) { //chemin relatif a "api/people"
 
 /**
  * Get all issues
- * TODO get all issues with a specific status (status=...?) with req.query
+
  * specify what statuses are authorized
  */
 
@@ -233,6 +309,7 @@ router.get('/', function (req, res, next) {
 
     var criteria = {};
 
+    /*criteria.action[req.issue.action.length - 1] = 1;*/
 
     // Get page and page size for pagination.
     var page = req.query.page ? parseInt(req.query.page, 10) : 1,
@@ -559,7 +636,7 @@ router.put('/:id', findIssue, function (req, res, next) {
 
 
 //update partiel
-    var updates = _.pick(req.body, 'type', 'coordinates', 'status'); //restreint les trucs à manger
+    var updates = _.pick(req.body, 'type', 'coordinates', 'status', 'description'); //restreint les trucs à manger
     _.extend(req.issue, updates); //regarde dans req. body les attributs et les remplacer, mais seulement ceux qui sont la
 
 

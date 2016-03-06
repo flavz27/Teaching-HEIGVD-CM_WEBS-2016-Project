@@ -300,6 +300,6 @@ router.delete('/:id', findComment, function (req, res, next) {
             return;
         }
 
-        res.sendStatus(204);
+        res.sendStatus(204).send("deleted"); //TODO: Test if "deleted" shows
     });
 });

@@ -11,7 +11,7 @@ var IssueSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
         required: true,
-        ref: "User", //mongoose sait que c'est une référence à un autre modèèle. Methode "populate"
+        ref: "User", //mongoose sait que c'est une référence à un autre modèle. Methode "populate"
     },
 
     date_created: {type: Number, required: true},
@@ -33,7 +33,7 @@ var IssueSchema = new Schema({
     ],
     action: [
         {
-            date: {type: Number, required: false},
+            date: {type: Number, required: true},
             action: {type: String, required: false},
             comment: {
                 type: Schema.Types.ObjectId,
