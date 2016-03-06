@@ -1167,7 +1167,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Response (Not Found):",
-          "content": "\n  <h1>Unexpected token j</h1>\n<h2>400</h2>\n<pre>SyntaxError: Unexpected token j",
+          "content": "\n[]",
           "type": "json"
         }
       ]
@@ -1358,7 +1358,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Response (Not Found):",
-          "content": "  <h1>Unexpected token j</h1>\n<h2>400</h2>\n<pre>SyntaxError: Unexpected token j",
+          "content": "[]",
           "type": "json"
         }
       ]
@@ -1435,7 +1435,7 @@ define({ "api": [
             "group": "Error 4xx",
             "optional": false,
             "field": "NotFound",
-            "description": "<p>There are not users with this parameters</p>"
+            "description": "<p>There are not users</p>"
           },
           {
             "group": "Error 4xx",
@@ -1448,7 +1448,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Response (Not Found):",
-          "content": "\n  <h1>Unexpected token j</h1>\n<h2>400</h2>\n<pre>SyntaxError: Unexpected token j",
+          "content": "\n[]",
           "type": "json"
         }
       ]

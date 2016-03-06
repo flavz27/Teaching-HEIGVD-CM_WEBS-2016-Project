@@ -143,9 +143,7 @@ router.post('/', function (req, res, next) { //chemin relatif a "api/people"
  *
  * @apiErrorExample Response (Not Found):
  *
- *    <h1>Unexpected token j</h1>
- <h2>400</h2>
- <pre>SyntaxError: Unexpected token j
+ []
  *
  *
  */
@@ -193,9 +191,7 @@ router.get('/citizens', function (req, res, next) {
  * @apiError Error404   The server has an unexpected error
  *
  * @apiErrorExample Response (Not Found):
- *    <h1>Unexpected token j</h1>
- <h2>400</h2>
- <pre>SyntaxError: Unexpected token j
+ *  []
  *
  *
  *
@@ -239,14 +235,12 @@ router.get('/staffs', function (req, res, next) {
  *
  *
  *
- * @apiError NotFound There are not users with this parameters
+ * @apiError NotFound There are not users
  * @apiError Error404   The server has an unexpected error
  *
  * @apiErrorExample Response (Not Found):
  *
- *    <h1>Unexpected token j</h1>
- <h2>400</h2>
- <pre>SyntaxError: Unexpected token j
+ []
  *
  *
  */
@@ -327,10 +321,6 @@ router.get('/:id', findUser, function (req, res, next) {
  * @apiParam {Number}   id            The Users-ID.
  *
  *
- *
- *
- *
- *
  * @apiError NotFound There are not user with this id
  * @apiError NotValid The request is not valid
  * @apiError Error404   The server has an unexpected error
@@ -408,7 +398,6 @@ router.delete('/:id', findUser, function (req, res, next) {
  *
  *
  */
-
 
 
 router.get('/:id/issues', findUser, findIssuesByUser, function (req, res, next) {
