@@ -34,7 +34,7 @@ function findIssue(req, res, next) {
     if (req.query.embed == 'comment') {
         query = query.populate('comments_user.comment'); //Not working either... Idk why...
     }
-
+    //TODO populate actions with their comments
     query.exec(function (err, issue) {
         if (err) {
             res.status(500).send(err);
@@ -127,7 +127,7 @@ router.get('/status', function (req, res, next) {
 });
 
 /**
- * add an action to issue
+ * add an action to issue /TODO why does it create an id ? not too important but I don't understand why it does that...
  */
 router.post('/:id/actions', findIssue, function (req, res, next) {
 
@@ -151,6 +151,35 @@ router.post('/:id/actions', findIssue, function (req, res, next) {
 
      res.send({"new action": updatedIssue.action[updatedIssue.action.length - 1], "old action" : updatedIssue.action[updatedIssue.action.length-2]});
      });
+
+
+
+});
+
+/**
+ * add a tag to issue //TODO why does it create an id ? not too important but I don't understand why it does that...
+ */
+router.post('/:id/tags', findIssue, function (req, res, next) {
+
+
+    // Add the action to the issue's addresses array.
+    req.issue.tags.push(req.body);
+    /* req.issue.action[req.issue.action.length - 1].current = 0;*/
+
+    // Save the issue.
+    req.issue.save(function(err, updatedIssue) {
+        //changes last action to not current and new to current
+
+
+        if (err) {
+            res.status(500).send(err);
+            return;
+        }
+
+
+
+        res.send({"new tag": updatedIssue.tags[updatedIssue.tags.length - 1]});
+    });
 
 
 

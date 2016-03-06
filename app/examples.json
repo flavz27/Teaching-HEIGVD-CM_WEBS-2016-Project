@@ -39,10 +39,11 @@ List of testing inputs for API
 //2. User
 
 {
-  "citizen":1,
-  "staff": 1,
-  "username": "flaviaPittet"
+"citizen":1,
+"staff": 0,
+"username": "CitizenNumber7"
 }
+
 
 ;
 
@@ -57,10 +58,15 @@ List of testing inputs for API
 }
 
 
-//4. action //TODO not working yet
+//4. action
 
 {
     "date": 732016,
     "action": "checked it out",
 
+}
+
+//5. tags
+{
+  "name" : "funny"
 }

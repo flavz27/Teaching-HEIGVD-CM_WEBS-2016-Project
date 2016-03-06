@@ -10,6 +10,7 @@ var express = require('express'),
     Issue = mongoose.model('Issue'),
     findUser = require("../services/findUser"),
     findIssuesByUser = require("../services/findIssuesByUser");
+    _ = require("underscore");
 
 
 module.exports = function (app) {
@@ -402,4 +403,25 @@ router.delete('/:id', findUser, function (req, res, next) {
 
 router.get('/:id/issues', findUser, findIssuesByUser, function (req, res, next) {
     res.send(req.issues);
+});
+
+/**
+ * updates a user
+ */
+router.put('/:id', findUser, function (req, res, next) {
+
+
+//update partiel
+    var updates = _.pick(req.body, 'citizen', 'staff'); //restreint les trucs à changer
+    _.extend(req.user, updates); //regarde dans req. body les attributs et les remplacer, mais seulement ceux qui sont la
+
+
+    req.user.save(function (err, updatedUser) {
+        if (err) {
+            res.status(500).send(err);
+            return;
+        }
+
+        res.send(updatedUser);
+    });
 });
