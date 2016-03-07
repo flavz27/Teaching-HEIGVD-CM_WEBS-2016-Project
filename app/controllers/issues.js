@@ -609,6 +609,13 @@ router.get('/', function (req, res, next) {
             .skip(offset)
             .limit(limit);
 
+        if (req.query.embed == 'user') {
+            query = query.populate('user');
+        }
+
+        if (req.query.embed2 == 'comment') {
+            query = query.populate('comments_user.comment');
+        }
 
         // Execute the query.
         query.exec(function(err, issues) {

@@ -9,7 +9,7 @@ var express = require('express'),
     User = mongoose.model('User'),
     Issue = mongoose.model('Issue'),
     findUser = require("../services/findUser"),
-    findIssuesByUser = require("../services/findIssuesByUser");
+    findIssuesByUser = require("../services/findIssuesByUser"),
     _ = require("underscore");
 
 
@@ -417,6 +417,7 @@ router.delete('/:id', findUser, function (req, res, next) {
 
 
 router.get('/:id/issues', findUser, findIssuesByUser, function (req, res, next) {
+
     res.send(req.issues);
 });
 
