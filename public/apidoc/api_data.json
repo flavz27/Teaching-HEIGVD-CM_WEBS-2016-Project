@@ -528,16 +528,16 @@
   },
   {
     "type": "post",
-    "url": "/issues/:id/actions",
-    "title": "Create an action",
+    "url": "/issues/:id/comments",
+    "title": "Add a comment",
     "version": "0.0.0",
-    "name": "CreateAction",
+    "name": "AddComment",
     "group": "Issues",
-    "description": "<p>add an action to issue with id</p>",
+    "description": "<p>add a comment to issue with id</p>",
     "examples": [
       {
         "title": "Example usage:",
-        "content": "http://localhost/api/issues/4177/actions",
+        "content": "http://localhost/api/issues/4177/comments",
         "type": "json"
       }
     ],
@@ -727,16 +727,16 @@
   },
   {
     "type": "post",
-    "url": "/issues/:id/comments",
-    "title": "Create a comment",
+    "url": "/issues/:id/actions",
+    "title": "Create an action",
     "version": "0.0.0",
-    "name": "CreateComment",
+    "name": "CreateAction",
     "group": "Issues",
-    "description": "<p>add a comment to issue with id</p>",
+    "description": "<p>add an action to issue with id</p>",
     "examples": [
       {
         "title": "Example usage:",
-        "content": "http://localhost/api/issues/4177/comments",
+        "content": "http://localhost/api/issues/4177/actions",
         "type": "json"
       }
     ],
@@ -1727,7 +1727,7 @@
     "version": "0.0.0",
     "name": "GetIssue",
     "group": "Issues",
-    "description": "<p>it's function can get an issue with his id</p>",
+    "description": "<p>it's function can get an issue with his id. (can add: /api/issues/:id_issue?embed=user&amp;embed2=comment)</p>",
     "examples": [
       {
         "title": "Example usage:",
@@ -1926,7 +1926,7 @@
     "version": "0.0.0",
     "name": "GetIssuesStatus",
     "group": "Issues",
-    "description": "<p>get all issues with specific status</p>",
+    "description": "<p>get all issues with specific status. You cannot enter something else than [created, acknowledged, assigned, in_progress, solved, rejected]. This will be dealt with on the front-end</p>",
     "examples": [
       {
         "title": "Example usage:",
@@ -2086,7 +2086,13 @@
             "group": "Error 4xx",
             "optional": false,
             "field": "NotFound",
-            "description": "<p>There are not comments</p>"
+            "description": "<p>There are not issues</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DataNotValid",
+            "description": "<p>The data entered is not authorized</p>"
           },
           {
             "group": "Error 4xx",
@@ -2100,6 +2106,11 @@
         {
           "title": "Response (Not Found):",
           "content": "\n[]",
+          "type": "json"
+        },
+        {
+          "title": "Response (Data Not Valid):",
+          "content": "\nthe data entered is not authorized",
           "type": "json"
         }
       ]
@@ -2147,62 +2158,6 @@
           },
           {
             "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "description",
-            "description": "<p>Description of the issue.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "type",
-            "description": "<p>Type of the issue (according to a list).</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Schema.Types.ObjectId",
-            "optional": false,
-            "field": "user",
-            "description": "<p>User how are created the issue</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": false,
-            "field": "date_created",
-            "description": "<p>Creation date of issue</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Object",
-            "optional": false,
-            "field": "coordonate",
-            "description": "<p>Coordinated the problem (longitude and latitude)</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "coordonate.lat",
-            "description": "<p>Latitude coordinate</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "coordonate.long",
-            "description": "<p>Longitude coordinate</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "status",
-            "description": "<p>Status of the issue</p>"
-          },
-          {
-            "group": "Success 200",
             "type": "[]",
             "optional": false,
             "field": "comments_user",
@@ -2214,55 +2169,6 @@
             "optional": false,
             "field": "comments_user.comment",
             "description": "<p>A comment of the issue</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "[]",
-            "optional": false,
-            "field": "action",
-            "description": "<p>Board with all actions of the issue</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": false,
-            "field": "action.date",
-            "description": "<p>Creation date of action</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "action.action",
-            "description": "<p>Definition of the action</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Schema.Types.ObjectId",
-            "optional": false,
-            "field": "action.comment",
-            "description": "<p>A comment of the action</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Boolean",
-            "optional": false,
-            "field": "action.current",
-            "description": "<p>If the action is the current = true</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "[]",
-            "optional": false,
-            "field": "tags",
-            "description": "<p>Board with all tags of the issue</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "tags.name",
-            "description": "<p>Name of the tag</p>"
           }
         ]
       }

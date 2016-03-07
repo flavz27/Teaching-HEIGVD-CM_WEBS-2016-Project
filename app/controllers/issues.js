@@ -68,7 +68,7 @@ function findIssue(req, res, next) {
  * @apiName GetIssuesStatus
  * @apiGroup Issues
  *
- * @apiDescription get all issues with specific status
+ * @apiDescription get all issues with specific status. You cannot enter something else than [created, acknowledged, assigned, in_progress, solved, rejected]. This will be dealt with on the front-end
  *
  * @apiExample Example usage:
  * http://localhost/api/issues/status
@@ -211,12 +211,6 @@ router.get('/status', function (req, res, next) {
 }
  */
 
-
-
-
-/**
- * add an action to issue
- */
 router.post('/:id/actions', findIssue, function (req, res, next) {
 
 
@@ -307,11 +301,6 @@ router.post('/:id/actions', findIssue, function (req, res, next) {
  */
 
 
-
-
-/**
- * add a tag to issue //
- */
 router.post('/:id/tags', findIssue, function (req, res, next) {
 
 
@@ -339,9 +328,9 @@ router.post('/:id/tags', findIssue, function (req, res, next) {
 });
 
 /**
- * @api {post} /issues/:id/comments Create a comment
+ * @api {post} /issues/:id/comments Add a comment
  * @apiVersion 0.0.0
- * @apiName CreateComment
+ * @apiName AddComment
  * @apiGroup Issues
  *
  * @apiDescription add a comment to issue with id
@@ -562,11 +551,6 @@ router.post('/', function (req, res, next) { //chemin relatif a "api/people"
 }
  */
 
-/**
- * Get all issues
-
- * specify what statuses are authorized
- */
 
 router.get('/', function (req, res, next) {
 
@@ -779,7 +763,7 @@ router.delete('/:id', findIssue, function (req, res, next) {
  * @apiName GetIssue
  * @apiGroup Issues
  *
- * @apiDescription  it's function can get an issue with his id
+ * @apiDescription  it's function can get an issue with his id. (can add: /api/issues/:id_issue?embed=user&embed2=comment)
  *
  * @apiExample Example usage:
  * http://localhost/api/issues/4711
@@ -834,9 +818,7 @@ router.delete('/:id', findIssue, function (req, res, next) {
 }
  */
 
-/**!!!TODO SAB: /api/issues/:id_issue?embed=user&embed2=comment
- *
- * */
+
 router.get('/:id', findIssue, function (req, res, next) { //add : ?embed=user&embed2=comment INCLUDE IN DOC
     res.send(req.issue);
 });
@@ -939,23 +921,9 @@ router.put('/:id', findIssue, function (req, res, next) {
  * @apiParam {Number}                     id            The Issue-ID.
  *
  * @apiSuccess {Number}                  id                     The Issue-ID.
- * @apiSuccess {String}                 description             Description of the issue.
- * @apiSuccess {String}                 type                    Type of the issue (according to a list).
- * @apiSuccess {Schema.Types.ObjectId}  user                    User how are created the issue
- * @apiSuccess {Number}                 date_created            Creation date of issue
- * @apiSuccess {Object}                 coordonate              Coordinated the problem (longitude and latitude)
- * @apiSuccess {String}                 coordonate.lat          Latitude coordinate
- * @apiSuccess {String}                 coordonate.long         Longitude coordinate
- * @apiSuccess {String}                 status                  Status of the issue
  * @apiSuccess {[]}                     comments_user           Board with all comments of the issue
  * @apiSuccess {Schema.Types.ObjectId}  comments_user.comment   A comment of the issue
- * @apiSuccess {[]}                     action                  Board with all actions of the issue
- * @apiSuccess {Number}                 action.date             Creation date of action
- * @apiSuccess {String}                 action.action           Definition of the action
- * @apiSuccess {Schema.Types.ObjectId}  action.comment          A comment of the action
- * @apiSuccess {Boolean}                action.current                 If the action is the current = true
- * @apiSuccess {[]}                     tags                    Board with all tags of the issue
- * @apiSuccess {String}                 tags.name               Name of the tag
+
  *
  *
  * @apiError UnexpectedToken The issue has some parameters with uncorrect type
