@@ -95,12 +95,16 @@ function findIssue(req, res, next) {
  * @apiSuccess {String}                 tags.name               Name of the tag
  *
  *
- * @apiError NotFound There are not comments
+ * @apiError NotFound There are not issues
+ * @apiError DataNotValid The data entered is not authorized
  * @apiError Error404   The server has an unexpected error
  *
  * @apiErrorExample Response (Not Found):
  *
  []
+ * @apiErrorExample Response (Data Not Valid):
+ *
+ * the data entered is not authorized
  */
 
 
