@@ -237,7 +237,7 @@ router.post('/', function (req, res, next) { //chemin relatif a "api/people"
 
 
 /**
- * @api {get} /comments/id  Get a comment
+ * @api {get} /comments/:id  Get a comment
  * @apiVersion 0.0.0
  * @apiName GetComment
  * @apiGroup Comments

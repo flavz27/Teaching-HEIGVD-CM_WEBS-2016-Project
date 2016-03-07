@@ -68,7 +68,7 @@
   },
   {
     "type": "get",
-    "url": "/comments/id",
+    "url": "/comments/:id",
     "title": "Get a comment",
     "version": "0.0.0",
     "name": "GetComment",
