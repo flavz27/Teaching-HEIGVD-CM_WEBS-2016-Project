@@ -2568,7 +2568,7 @@ define({ "api": [
     "version": "0.0.0",
     "name": "GetUser",
     "group": "Users",
-    "description": "<p>This route can gets a specific user based on id.</p>",
+    "description": "<p>This route can gets a specific user with id.</p>",
     "examples": [
       {
         "title": "Example usage:",
@@ -2664,96 +2664,6 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/users/citizens",
-    "title": "Get all citizens",
-    "version": "0.0.0",
-    "name": "GetUserCitizen",
-    "group": "Users",
-    "description": "<p>This route can get all user how are citizen (with boolean citizen true).</p>",
-    "examples": [
-      {
-        "title": "Example usage:",
-        "content": "http://localhost/api/users/citizens",
-        "type": "json"
-      }
-    ],
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "username",
-            "description": "<p>The username of the user.</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": false,
-            "field": "id",
-            "description": "<p>The Users-ID.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Boolean",
-            "optional": false,
-            "field": "citizen",
-            "description": "<p>true if the user is a citizen false if not.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Boolean",
-            "optional": false,
-            "field": "staff",
-            "description": "<p>true if the user is a staff false if not.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "username",
-            "description": "<p>Pseudo of the user.</p>"
-          }
-        ]
-      }
-    },
-    "error": {
-      "fields": {
-        "Error 4xx": [
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "NotFound",
-            "description": "<p>There are not users with this parameters</p>"
-          },
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "Error404",
-            "description": "<p>The server has an unexpected error</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Response (Not Found):",
-          "content": "\n[]",
-          "type": "json"
-        }
-      ]
-    },
-    "filename": "app/controllers/users.js",
-    "groupTitle": "Users"
-  },
-  {
-    "type": "get",
     "url": "/users/:id/issues",
     "title": "Get all issues",
     "version": "0.0.0",
@@ -2792,24 +2702,122 @@ define({ "api": [
           },
           {
             "group": "Success 200",
-            "type": "Boolean",
+            "type": "String",
             "optional": false,
-            "field": "citizen",
-            "description": "<p>true if the user is a citizen false if not.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Boolean",
-            "optional": false,
-            "field": "staff",
-            "description": "<p>true if the user is a staff false if not.</p>"
+            "field": "description",
+            "description": "<p>Description of the issue.</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "username",
-            "description": "<p>Pseudo of the user.</p>"
+            "field": "type",
+            "description": "<p>Type of the issue (according to a list).</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Schema.Types.ObjectId",
+            "optional": false,
+            "field": "user",
+            "description": "<p>User how are created the issue</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "date_created",
+            "description": "<p>Creation date of issue</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "coordonate",
+            "description": "<p>Coordinated the problem (longitude and latitude)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "coordonate.lat",
+            "description": "<p>Latitude coordinate</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "coordonate.long",
+            "description": "<p>Longitude coordinate</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status of the issue</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "[]",
+            "optional": false,
+            "field": "comments_user",
+            "description": "<p>Board with all comments of the issue</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Schema.Types.ObjectId",
+            "optional": false,
+            "field": "comments_user.comment",
+            "description": "<p>A comment of the issue</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "[]",
+            "optional": false,
+            "field": "action",
+            "description": "<p>Board with all actions of the issue</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "action.date",
+            "description": "<p>Creation date of action</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "action.action",
+            "description": "<p>Definition of the action</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Schema.Types.ObjectId",
+            "optional": false,
+            "field": "action.comment",
+            "description": "<p>A comment of the action</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "action.current",
+            "description": "<p>If the action is the current = true</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "[]",
+            "optional": false,
+            "field": "tags",
+            "description": "<p>Board with all tags of the issue</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "tags.name",
+            "description": "<p>Name of the tag</p>"
           }
         ]
       }
@@ -3034,13 +3042,103 @@ define({ "api": [
     "groupTitle": "Users"
   },
   {
+    "type": "get",
+    "url": "/users/citizens",
+    "title": "Get all citizens",
+    "version": "0.0.0",
+    "name": "GetUsersCitizen",
+    "group": "Users",
+    "description": "<p>This route can get all user how are citizen (with boolean citizen true).</p>",
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "http://localhost/api/users/citizens",
+        "type": "json"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>The username of the user.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>The Users-ID.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "citizen",
+            "description": "<p>true if the user is a citizen false if not.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "staff",
+            "description": "<p>true if the user is a staff false if not.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>Pseudo of the user.</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound",
+            "description": "<p>There are not users with this parameters</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "Error404",
+            "description": "<p>The server has an unexpected error</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (Not Found):",
+          "content": "\n[]",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "app/controllers/users.js",
+    "groupTitle": "Users"
+  },
+  {
     "type": "post",
     "url": "/users",
     "title": "Create an user",
     "version": "0.0.0",
     "name": "PostUser",
     "group": "Users",
-    "description": "<p>This route can create a news user with status staff or not.</p>",
+    "description": "<p>This route can create a news user with status staff or not and citizen or not.</p>",
     "examples": [
       {
         "title": "Example usage:",
