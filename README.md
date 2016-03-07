@@ -1,4 +1,4 @@
-# COMEM Web Services 2016 Project - Flavia Pittet et Sabine Rochat
+# COMEM Web Services 2016 Project - Flavia Pittet and Sabine Rochat
 
 Course: [https://github.com/SoftEng-HEIGVD/Teaching-HEIGVD-CM_WEBS-2016](https://github.com/SoftEng-HEIGVD/Teaching-HEIGVD-CM_WEBS-2016)
 
@@ -21,3 +21,33 @@ The apidoc is accessible by the homepage
 ###Routes
 our api routes all start by /api/... and are all documented in the apidoc
 
+
+####Issue
+POST/issues/:id/comments
+POST/issues/:id_issue/comments
+POST/issues/:id/tags
+POST/issues/:id/actions
+POST/issues
+DELETE/issues/:id
+GET/issues
+GET/issues/:id
+GET/issues/status
+PUT/issues/:id
+
+####User
+POST/users
+DELETE/users/:id
+GET/users/citizens
+GET/users/:id/issues
+GET/users/staffs
+GET/users
+GET/users/:id
+PUT/users/:id
+
+####Comment
+POST/comments/:action_id/:id
+POST/comments
+DELETE/comments/id
+GET/comments
+GET/comments/id
+PUT/comments/:id
