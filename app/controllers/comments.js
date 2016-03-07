@@ -39,8 +39,26 @@ function findComment(req, res, next) {
 /**
  * ROUTES
  */
+/**
+ * assign comment to an action
+ */
+router.post('/:action_id/:id', findComment, function(req, res) {
+    res.sent({"message":"sorry, this method doesn't work yet !"});
+/*    //find action
+    req.action.user = req.comment._id;
 
 
+    // Save the issue.
+    req.comment.save(function(err, updatedComment) {
+        if (err) {
+            res.status(500).send(err);
+            return;
+        }
+
+        res.send(updatedComment);
+    });*/
+    //TODO: not working
+});
 
 /**
  * @api {get} /comments Read all comments

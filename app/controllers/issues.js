@@ -186,6 +186,25 @@ router.post('/:id/tags', findIssue, function (req, res, next) {
 });
 
 /**
+ * create comment for an issue
+ */
+router.post('/:id/comments', findIssue, function (req, res, next) { //chemin relatif a "api/people"
+    /*res.send("Hello World!");*/
+
+    var comment = new Comment(req.body);
+    comment.user = req.issue._id;
+
+    comment.save(function (err, createdComment) {
+        if (err) {
+            res.status(500).send(err); // pas propre car donne infos au client
+            return; //arrête la fonction. ATTENTION - LE METTRE car sinon CRASH du serveur
+        }
+        res.send({"created comment" : createdComment, "issue": req.issue});
+    });
+
+});
+
+/**
  * @api {post} /issues Create an issue
  * @apiVersion 0.0.0
  * @apiName CreateIssue
