@@ -7,11 +7,11 @@ List of testing inputs for API
 //1. Issue
 
 {
-  "type": "testx1",
+  "type": "test22",
   "user": "56ced63b3376c594473ab8c2",
-  "description":"testing1546",
+  "description":"testing101",
 
-  "date_created": 25022016,
+  "date_created": 25022016,//pas commencer par 0 !!
   "coordonate": {
     "lat": 20000001,
     "long": 20000001
@@ -25,10 +25,17 @@ List of testing inputs for API
   "action":[
     {
 
-      "date": 732016,
+      "date": 732016, //pas commencer par 0 !!
       "action": "checked it out",
-
       "current":1
+    }
+  ],
+  "tags":[
+    {
+      "name": "Lausanne"
+    },
+    {
+      "name": "testing"
     }
   ]
 
@@ -51,7 +58,7 @@ List of testing inputs for API
 //3. Comment
 
 {
-"date_created": 25022016,
+"date_created": 25022016, //pas commencer par 0 !!
 "description":" lorem ipsum bla bla bla",
 "user": "56ced63b3376c594473ab8c2"
 
@@ -61,8 +68,9 @@ List of testing inputs for API
 //4. action
 
 {
-    "date": 732016,
-    "action": "checked it out",
+    "date": 732016, //ne pas commencer par "0" sinon ça plante
+    "action": "checked it out"
+        //on peut mettre un commentaire ici aussi
 
 }
 

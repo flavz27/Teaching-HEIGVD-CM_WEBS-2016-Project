@@ -273,7 +273,10 @@ router.post('/', function (req, res, next) { //chemin relatif a "api/people"
 //res.send("Hello World!");
 
     var issue = new Issue(req.body);
-
+ /*   if(req.body.action[].current = null) {
+        issue.action[].current = 1;
+    }
+*/
     issue.save(function (err, createdIssue) {
         if (err) {
             res.status(500).send(err); // pas propre car donne infos au client
