@@ -427,6 +427,12 @@ define({ "api": [
           {
             "group": "Error 4xx",
             "optional": false,
+            "field": "NotFound",
+            "description": "<p>The id comment is not found</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
             "field": "Error404",
             "description": "<p>The server has an unexpected error</p>"
           }
@@ -440,7 +446,12 @@ define({ "api": [
         },
         {
           "title": "Response (Validation Error):",
-          "content": "{\n  \"message\": \"Comment validation failed\",\n  \"name\": \"ValidationError\",\n  \"errors\": {\n    \"user\": {\n      \"properties\": {\n        \"type\": \"required\",\n        \"message\": \"Path `{PATH}` is required.\",\n        \"path\": \"user\"\n      },\n      \"message\": \"Path `user` is required.\",\n      \"name\": \"ValidatorError\",\n      \"kind\": \"required\",\n      \"path\": \"user\"\n    },\n    \"description\": {\n      \"properties\": {\n        \"type\": \"required\",\n        \"message\": \"Path `{PATH}` is required.\",\n        \"path\": \"description\"\n      },\n      \"message\": \"Path `description` is required.\",\n      \"name\": \"ValidatorError\",\n      \"kind\": \"required\",\n      \"path\": \"description\"\n    },\n    \"date_created\": {\n      \"properties\": {\n        \"type\": \"required\",\n        \"message\": \"Path `{PATH}` is required.\",\n        \"path\": \"date_created\"\n      },\n      \"message\": \"Path `date_created` is required.\",\n      \"name\": \"ValidatorError\",\n      \"kind\": \"required\",\n      \"path\": \"date_created\"\n    }\n  }\n}",
+          "content": "  <h1>Unexpected token j</h1>\n<h2>400</h2>\n<pre>SyntaxError: Unexpected token j",
+          "type": "json"
+        },
+        {
+          "title": "Response (Unexpected Token):",
+          "content": "Comment not found",
           "type": "json"
         }
       ]

@@ -65,6 +65,8 @@ function findComment(req, res, next) {
  *
  * @apiError UnexpectedToken The user has some parameters with uncorrect type
  * @apiError ValidationError There are missing parameters
+ * @apiError NotFound The id comment is not found
+ *
  * @apiError Error404   The server has an unexpected error
  *
  * @apiErrorExample Response (Unexpected Token):
@@ -74,46 +76,11 @@ function findComment(req, res, next) {
  <pre>SyntaxError: Unexpected token j
  *
  * @apiErrorExample {json} Response (Validation Error):
- {
-   "message": "Comment validation failed",
-   "name": "ValidationError",
-   "errors": {
-     "user": {
-       "properties": {
-         "type": "required",
-         "message": "Path `{PATH}` is required.",
-         "path": "user"
-       },
-       "message": "Path `user` is required.",
-       "name": "ValidatorError",
-       "kind": "required",
-       "path": "user"
-     },
-     "description": {
-       "properties": {
-         "type": "required",
-         "message": "Path `{PATH}` is required.",
-         "path": "description"
-       },
-       "message": "Path `description` is required.",
-       "name": "ValidatorError",
-       "kind": "required",
-       "path": "description"
-     },
-     "date_created": {
-       "properties": {
-         "type": "required",
-         "message": "Path `{PATH}` is required.",
-         "path": "date_created"
-       },
-       "message": "Path `date_created` is required.",
-       "name": "ValidatorError",
-       "kind": "required",
-       "path": "date_created"
-     }
-   }
- }
- *
+ *    <h1>Unexpected token j</h1>
+ <h2>400</h2>
+ <pre>SyntaxError: Unexpected token j
+ *@apiErrorExample Response (Unexpected Token):
+ * Comment not found
  */
 
 
