@@ -60,7 +60,7 @@ module.exports = function (app) {
  * @apiName PostUser
  * @apiGroup Users
  *
- * @apiDescription This route can create a news user with status staff or not and citizen or not.
+ * @apiDescription This route can create a news user with status staff or not and citizen or not. "citizen": boolean but if something else is entered, the api will store it as true, same for "staff"
  *
  * @apiExample Example usage:
  * http://localhost/api/users
