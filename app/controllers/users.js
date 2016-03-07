@@ -372,10 +372,25 @@ router.delete('/:id', findUser, function (req, res, next) {
  *
  *
  *
- * @apiSuccess {Number}   id            The Users-ID.
- * @apiSuccess {Boolean}  citizen       true if the user is a citizen false if not.
- * @apiSuccess {Boolean}  staff         true if the user is a staff false if not.
- * @apiSuccess {String}   username      Pseudo of the user.
+ * @apiSuccess {Number}                 id                      The Users-ID.
+ * @apiSuccess {Number}                 id                      The Issue-ID.
+ * @apiSuccess {String}                 description             Description of the issue.
+ * @apiSuccess {String}                 type                    Type of the issue (according to a list).
+ * @apiSuccess {Schema.Types.ObjectId}  user                    User how are created the issue
+ * @apiSuccess {Number}                 date_created            Creation date of issue
+ * @apiSuccess {Object}                 coordonate              Coordinated the problem (longitude and latitude)
+ * @apiSuccess {String}                 coordonate.lat          Latitude coordinate
+ * @apiSuccess {String}                 coordonate.long         Longitude coordinate
+ * @apiSuccess {String}                 status                  Status of the issue
+ * @apiSuccess {[]}                     comments_user           Board with all comments of the issue
+ * @apiSuccess {Schema.Types.ObjectId}  comments_user.comment   A comment of the issue
+ * @apiSuccess {[]}                     action                  Board with all actions of the issue
+ * @apiSuccess {Number}                 action.date             Creation date of action
+ * @apiSuccess {String}                 action.action           Definition of the action
+ * @apiSuccess {Schema.Types.ObjectId}  action.comment          A comment of the action
+ * @apiSuccess {Boolean}                action.current                 If the action is the current = true
+ * @apiSuccess {[]}                     tags                    Board with all tags of the issue
+ * @apiSuccess {String}                 tags.name               Name of the tag
  *
  *
  *
