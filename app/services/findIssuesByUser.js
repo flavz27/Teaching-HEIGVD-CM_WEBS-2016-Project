@@ -7,7 +7,6 @@ var express = require('express'),
 
 function findIssuesByUser(req, res, next) {
 
-
     // Find the user.
 
     //User.findById(re) //TODO callback function like issue.find but with else if
@@ -16,7 +15,13 @@ function findIssuesByUser(req, res, next) {
      user: req.user._id //autre Middleware avant
      };
 
+    if (req.query.embed == 'user') {
+        query = query.populate('user');
+    }
 
+    if (req.query.embed2 == 'comment') {
+        query = query.populate('comments_user.comment');
+    }
     Issue.find(criteria, function (err, issues) {
         if (err) {
             res.status(500).send(err);
