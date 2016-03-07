@@ -78,15 +78,55 @@ function findMatchingIssues(callback) {
 }*/
 
 
-
-
 /**
  * ROUTES
  */
 
+
+
+
 /**
- * get all issues with specific status
+ * @api {get} /issues/status Get status
+ * @apiVersion 0.0.0
+ * @apiName GetIssuesStatus
+ * @apiGroup Issues
+ *
+ * @apiDescription get all issues with specific status
+ *
+ * @apiExample Example usage:
+ * http://localhost/api/issues/status
+ *
+ * @apiParam {String} description The Description of the comments.
+ *
+ * @apiSuccess {Number}                  id                     The Issue-ID.
+ * @apiSuccess {String}                 description             Description of the issue.
+ * @apiSuccess {String}                 type                    Type of the issue (according to a list).
+ * @apiSuccess {Schema.Types.ObjectId}  user                    User how are created the issue
+ * @apiSuccess {Number}                 date_created            Creation date of issue
+ * @apiSuccess {Object}                 coordonate              Coordinated the problem (longitude and latitude)
+ * @apiSuccess {String}                 coordonate.lat          Latitude coordinate
+ * @apiSuccess {String}                 coordonate.long         Longitude coordinate
+ * @apiSuccess {String}                 status                  Status of the issue
+ * @apiSuccess {[]}                     comments_user           Board with all comments of the issue
+ * @apiSuccess {Schema.Types.ObjectId}  comments_user.comment   A comment of the issue
+ * @apiSuccess {[]}                     action                  Board with all actions of the issue
+ * @apiSuccess {Number}                 action.date             Creation date of action
+ * @apiSuccess {String}                 action.action           Definition of the action
+ * @apiSuccess {Schema.Types.ObjectId}  action.comment          A comment of the action
+ * @apiSuccess {Boolean}                action.current                 If the action is the current = true
+ * @apiSuccess {[]}                     tags                    Board with all tags of the issue
+ * @apiSuccess {String}                 tags.name               Name of the tag
+ *
+ *
+ * @apiError NotFound There are not comments
+ * @apiError Error404   The server has an unexpected error
+ *
+ * @apiErrorExample Response (Not Found):
+ *
+ []
  */
+
+
 router.get('/status', function (req, res, next) {
 
     var request = req.query.data;
@@ -126,6 +166,73 @@ router.get('/status', function (req, res, next) {
 
 });
 
+
+
+
+/**
+ * @api {post} /issues/:id/actions Create an action
+ * @apiVersion 0.0.0
+ * @apiName CreateAction
+ * @apiGroup Issues
+ *
+ * @apiDescription add an action to issue with id
+ *
+ * @apiExample Example usage:
+ * http://localhost/api/issues/4177/actions
+ *
+ * @apiParam {Number}                     id            The Issue-ID.
+ *
+ * @apiSuccess {Number}                  id                     The Issue-ID.
+ * @apiSuccess {String}                 description             Description of the issue.
+ * @apiSuccess {String}                 type                    Type of the issue (according to a list).
+ * @apiSuccess {Schema.Types.ObjectId}  user                    User how are created the issue
+ * @apiSuccess {Number}                 date_created            Creation date of issue
+ * @apiSuccess {Object}                 coordonate              Coordinated the problem (longitude and latitude)
+ * @apiSuccess {String}                 coordonate.lat          Latitude coordinate
+ * @apiSuccess {String}                 coordonate.long         Longitude coordinate
+ * @apiSuccess {String}                 status                  Status of the issue
+ * @apiSuccess {[]}                     comments_user           Board with all comments of the issue
+ * @apiSuccess {Schema.Types.ObjectId}  comments_user.comment   A comment of the issue
+ * @apiSuccess {[]}                     action                  Board with all actions of the issue
+ * @apiSuccess {Number}                 action.date             Creation date of action
+ * @apiSuccess {String}                 action.action           Definition of the action
+ * @apiSuccess {Schema.Types.ObjectId}  action.comment          A comment of the action
+ * @apiSuccess {Boolean}                action.current                 If the action is the current = true
+ * @apiSuccess {[]}                     tags                    Board with all tags of the issue
+ * @apiSuccess {String}                 tags.name               Name of the tag
+ *
+ *
+ * @apiError UnexpectedToken The issue has some parameters with uncorrect type
+ * @apiError ValidationError There are missing parameters
+ * @apiError Error404   The server has an unexpected error
+ *
+ * @apiErrorExample Response (Unexpected Token):
+ *    <h1>Unexpected token j</h1>
+ <h2>400</h2>
+ <pre>SyntaxError: Unexpected token j
+ *
+ * @apiErrorExample {json} Response (Validation Error):
+ * {"message": "Issue validation failed",
+  "name": "ValidationError",
+  "errors": {
+    "description": {
+      "properties": {
+        "type": "required",
+        "message": "Path `{PATH}` is required.",
+        "path": "description"
+      },
+      "message": "Path `description` is required.",
+      "name": "ValidatorError",
+      "kind": "required",
+      "path": "description"
+    }
+  }
+}
+ */
+
+
+
+
 /**
  * add an action to issue /TODO why does it create an id ? not too important but I don't understand why it does that...
  */
@@ -155,6 +262,71 @@ router.post('/:id/actions', findIssue, function (req, res, next) {
 
 
 });
+
+
+/**
+ * @api {post} /issues/:id/tags Create a tag
+ * @apiVersion 0.0.0
+ * @apiName CreateTag
+ * @apiGroup Issues
+ *
+ * @apiDescription add a tag to issue with id
+ *
+ * @apiExample Example usage:
+ * http://localhost/api/issues/4177/tags
+ *
+ * @apiParam {Number}                     id            The Issue-ID.
+ *
+ * @apiSuccess {Number}                  id                     The Issue-ID.
+ * @apiSuccess {String}                 description             Description of the issue.
+ * @apiSuccess {String}                 type                    Type of the issue (according to a list).
+ * @apiSuccess {Schema.Types.ObjectId}  user                    User how are created the issue
+ * @apiSuccess {Number}                 date_created            Creation date of issue
+ * @apiSuccess {Object}                 coordonate              Coordinated the problem (longitude and latitude)
+ * @apiSuccess {String}                 coordonate.lat          Latitude coordinate
+ * @apiSuccess {String}                 coordonate.long         Longitude coordinate
+ * @apiSuccess {String}                 status                  Status of the issue
+ * @apiSuccess {[]}                     comments_user           Board with all comments of the issue
+ * @apiSuccess {Schema.Types.ObjectId}  comments_user.comment   A comment of the issue
+ * @apiSuccess {[]}                     action                  Board with all actions of the issue
+ * @apiSuccess {Number}                 action.date             Creation date of action
+ * @apiSuccess {String}                 action.action           Definition of the action
+ * @apiSuccess {Schema.Types.ObjectId}  action.comment          A comment of the action
+ * @apiSuccess {Boolean}                action.current                 If the action is the current = true
+ * @apiSuccess {[]}                     tags                    Board with all tags of the issue
+ * @apiSuccess {String}                 tags.name               Name of the tag
+ *
+ *
+ * @apiError UnexpectedToken The issue has some parameters with uncorrect type
+ * @apiError ValidationError There are missing parameters
+ * @apiError Error404   The server has an unexpected error
+ *
+ * @apiErrorExample Response (Unexpected Token):
+ *    <h1>Unexpected token j</h1>
+ <h2>400</h2>
+ <pre>SyntaxError: Unexpected token j
+ *
+ * @apiErrorExample {json} Response (Validation Error):
+ * {"message": "Issue validation failed",
+  "name": "ValidationError",
+  "errors": {
+    "description": {
+      "properties": {
+        "type": "required",
+        "message": "Path `{PATH}` is required.",
+        "path": "description"
+      },
+      "message": "Path `description` is required.",
+      "name": "ValidatorError",
+      "kind": "required",
+      "path": "description"
+    }
+  }
+}
+ */
+
+
+
 
 /**
  * add a tag to issue //TODO why does it create an id ? not too important but I don't understand why it does that...
@@ -186,8 +358,67 @@ router.post('/:id/tags', findIssue, function (req, res, next) {
 });
 
 /**
- * create comment for an issue
+ * @api {post} /issues/:id/comments Create a comment
+ * @apiVersion 0.0.0
+ * @apiName CreateComment
+ * @apiGroup Issues
+ *
+ * @apiDescription add a comment to issue with id
+ *
+ * @apiExample Example usage:
+ * http://localhost/api/issues/4177/comments
+ *
+ * @apiParam {Number}                     id            The Issue-ID.
+ *
+ * @apiSuccess {Number}                  id                     The Issue-ID.
+ * @apiSuccess {String}                 description             Description of the issue.
+ * @apiSuccess {String}                 type                    Type of the issue (according to a list).
+ * @apiSuccess {Schema.Types.ObjectId}  user                    User how are created the issue
+ * @apiSuccess {Number}                 date_created            Creation date of issue
+ * @apiSuccess {Object}                 coordonate              Coordinated the problem (longitude and latitude)
+ * @apiSuccess {String}                 coordonate.lat          Latitude coordinate
+ * @apiSuccess {String}                 coordonate.long         Longitude coordinate
+ * @apiSuccess {String}                 status                  Status of the issue
+ * @apiSuccess {[]}                     comments_user           Board with all comments of the issue
+ * @apiSuccess {Schema.Types.ObjectId}  comments_user.comment   A comment of the issue
+ * @apiSuccess {[]}                     action                  Board with all actions of the issue
+ * @apiSuccess {Number}                 action.date             Creation date of action
+ * @apiSuccess {String}                 action.action           Definition of the action
+ * @apiSuccess {Schema.Types.ObjectId}  action.comment          A comment of the action
+ * @apiSuccess {Boolean}                action.current                 If the action is the current = true
+ * @apiSuccess {[]}                     tags                    Board with all tags of the issue
+ * @apiSuccess {String}                 tags.name               Name of the tag
+ *
+ *
+ * @apiError UnexpectedToken The issue has some parameters with uncorrect type
+ * @apiError ValidationError There are missing parameters
+ * @apiError Error404   The server has an unexpected error
+ *
+ * @apiErrorExample Response (Unexpected Token):
+ *    <h1>Unexpected token j</h1>
+ <h2>400</h2>
+ <pre>SyntaxError: Unexpected token j
+ *
+ * @apiErrorExample {json} Response (Validation Error):
+ * {"message": "Issue validation failed",
+  "name": "ValidationError",
+  "errors": {
+    "description": {
+      "properties": {
+        "type": "required",
+        "message": "Path `{PATH}` is required.",
+        "path": "description"
+      },
+      "message": "Path `description` is required.",
+      "name": "ValidatorError",
+      "kind": "required",
+      "path": "description"
+    }
+  }
+}
  */
+
+
 router.post('/:id/comments', findIssue, function (req, res, next) { //chemin relatif a "api/people"
     /*res.send("Hello World!");*/
 
@@ -217,7 +448,7 @@ router.post('/:id/comments', findIssue, function (req, res, next) { //chemin rel
  *
  * @apiParam {String} description The Description of the comments.
  *
- *
+ * @apiSuccess {Number}                  id                     The Issue-ID.
  * @apiSuccess {String}                 description             Description of the issue.
  * @apiSuccess {String}                 type                    Type of the issue (according to a list).
  * @apiSuccess {Schema.Types.ObjectId}  user                    User how are created the issue
@@ -302,7 +533,7 @@ router.post('/', function (req, res, next) { //chemin relatif a "api/people"
  *
  * @apiParam {String}                   description             The Description of the comments.
  *
- *
+ * @apiSuccess {Number}                  id                     The Issue-ID.
  * @apiSuccess {String}                 description             Description of the issue.
  * @apiSuccess {String}                 type                    Type of the issue (according to a list).
  * @apiSuccess {Schema.Types.ObjectId}  user                    User how are created the issue
@@ -493,9 +724,9 @@ router.get('/', function (req, res, next) {
  * @apiExample Example usage:
  * http://localhost/api/issues/4711
  *
- * @apiParam {String}                   description             The Description of the comments.
+ * @apiParam {Number}                     id            The Issue-ID.
  *
- *
+ * @apiSuccess {Number}                  id                     The Issue-ID.
  * @apiSuccess {String}                 description             Description of the issue.
  * @apiSuccess {String}                 type                    Type of the issue (according to a list).
  * @apiSuccess {Schema.Types.ObjectId}  user                    User how are created the issue
@@ -565,9 +796,9 @@ router.delete('/:id', findIssue, function (req, res, next) {
  * @apiExample Example usage:
  * http://localhost/api/issues/4711
  *
- * @apiParam {String}                   description             The Description of the comments.
+ * @apiParam {Number}                     id            The Issue-ID.
  *
- *
+ * @apiSuccess {Number}                  id                     The Issue-ID.
  * @apiSuccess {String}                 description             Description of the issue.
  * @apiSuccess {String}                 type                    Type of the issue (according to a list).
  * @apiSuccess {Schema.Types.ObjectId}  user                    User how are created the issue
@@ -633,9 +864,9 @@ router.get('/:id', findIssue, function (req, res, next) { //add : ?embed=user&em
  * @apiExample Example usage:
  * http://localhost/api/issues/4711
  *
- * @apiParam {String}                   description             The Description of the comments.
+ * @apiParam {Number}                     id            The Issue-ID.
  *
- *
+ * @apiSuccess {Number}                  id                     The Issue-ID.
  * @apiSuccess {String}                 description             Description of the issue.
  * @apiSuccess {String}                 type                    Type of the issue (according to a list).
  * @apiSuccess {Schema.Types.ObjectId}  user                    User how are created the issue
@@ -717,9 +948,9 @@ router.put('/:id', findIssue, function (req, res, next) {
  * @apiExample Example usage:
  * http://localhost/api/issues/4711/comments
  *
- * @apiParam {String}                   description             The Description of the comments.
+ * @apiParam {Number}                     id            The Issue-ID.
  *
- *
+ * @apiSuccess {Number}                  id                     The Issue-ID.
  * @apiSuccess {String}                 description             Description of the issue.
  * @apiSuccess {String}                 type                    Type of the issue (according to a list).
  * @apiSuccess {Schema.Types.ObjectId}  user                    User how are created the issue
