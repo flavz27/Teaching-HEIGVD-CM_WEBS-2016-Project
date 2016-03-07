@@ -31,7 +31,7 @@ function findIssue(req, res, next) {
         query = query.populate('user'); //TODO: not working
     }
 
-    if (req.query.embed == 'comment') {
+    if (req.query.embed2 == 'comment') {
         query = query.populate('comments_user.comment'); //Not working either... Idk why...
     }
     //TODO populate actions with their comments
@@ -846,8 +846,10 @@ router.delete('/:id', findIssue, function (req, res, next) {
 }
  */
 
-
-router.get('/:id', findIssue, function (req, res, next) {
+/**!!!TODO SAB: /api/issues/:id_issue?embed=user&embed2=comment
+ *
+ * */
+router.get('/:id', findIssue, function (req, res, next) { //add : ?embed=user&embed2=comment INCLUDE IN DOC
     res.send(req.issue);
 });
 
