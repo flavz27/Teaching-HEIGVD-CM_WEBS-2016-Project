@@ -35,9 +35,6 @@ function findIssue(req, res, next) {
         query = query.populate('comments_user.comment');
     }
 
-    query = query.populate('action.comment');
-
-    //TODO populate actions with their comments
     query.exec(function (err, issue) {
         if (err) {
             res.status(500).send(err);
@@ -138,9 +135,9 @@ router.get('/status', function (req, res, next) {
             res.send(issues);
         });
     } else {
-        res.status(500);
+        res.status(500).send("the data entered is not authorized");
         return;
-    } //TODO: error not working
+    }
 
 
 
@@ -214,7 +211,7 @@ router.get('/status', function (req, res, next) {
 
 
 /**
- * add an action to issue /TODO why does it create an id ? not too important but I don't understand why it does that...
+ * add an action to issue
  */
 router.post('/:id/actions', findIssue, function (req, res, next) {
 
@@ -309,7 +306,7 @@ router.post('/:id/actions', findIssue, function (req, res, next) {
 
 
 /**
- * add a tag to issue //TODO why does it create an id ? not too important but I don't understand why it does that...
+ * add a tag to issue //
  */
 router.post('/:id/tags', findIssue, function (req, res, next) {
 
