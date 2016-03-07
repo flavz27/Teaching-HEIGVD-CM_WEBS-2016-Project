@@ -349,6 +349,174 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "/comments/:action_id/:id",
+    "title": "Assign comment to an action",
+    "version": "0.0.0",
+    "name": "PostCommentsAction",
+    "group": "Comments",
+    "description": "<p>This route can assign comment to an action with specific id.</p>",
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "http://localhost/api/comments/1122233621/515265515522",
+        "type": "json"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "description",
+            "description": "<p>The Description of the comments.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>The Comments-ID.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "date_created",
+            "description": "<p>Creation Date.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "description",
+            "description": "<p>Description of the Comment.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Schema.Types.ObjectId",
+            "optional": false,
+            "field": "user",
+            "description": "<p>User-ID how are edit the comment.</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UnexpectedToken",
+            "description": "<p>The user has some parameters with uncorrect type</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ValidationError",
+            "description": "<p>There are missing parameters</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "Error404",
+            "description": "<p>The server has an unexpected error</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (Unexpected Token):",
+          "content": "\n  <h1>Unexpected token j</h1>\n<h2>400</h2>\n<pre>SyntaxError: Unexpected token j",
+          "type": "json"
+        },
+        {
+          "title": "Response (Validation Error):",
+          "content": "{\n  \"message\": \"Comment validation failed\",\n  \"name\": \"ValidationError\",\n  \"errors\": {\n    \"user\": {\n      \"properties\": {\n        \"type\": \"required\",\n        \"message\": \"Path `{PATH}` is required.\",\n        \"path\": \"user\"\n      },\n      \"message\": \"Path `user` is required.\",\n      \"name\": \"ValidatorError\",\n      \"kind\": \"required\",\n      \"path\": \"user\"\n    },\n    \"description\": {\n      \"properties\": {\n        \"type\": \"required\",\n        \"message\": \"Path `{PATH}` is required.\",\n        \"path\": \"description\"\n      },\n      \"message\": \"Path `description` is required.\",\n      \"name\": \"ValidatorError\",\n      \"kind\": \"required\",\n      \"path\": \"description\"\n    },\n    \"date_created\": {\n      \"properties\": {\n        \"type\": \"required\",\n        \"message\": \"Path `{PATH}` is required.\",\n        \"path\": \"date_created\"\n      },\n      \"message\": \"Path `date_created` is required.\",\n      \"name\": \"ValidatorError\",\n      \"kind\": \"required\",\n      \"path\": \"date_created\"\n    }\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "app/controllers/comments.js",
+    "groupTitle": "Comments"
+  },
+  {
+    "type": "put",
+    "url": "/comments/:id",
+    "title": "Modify a comment",
+    "version": "0.0.0",
+    "name": "PutComment",
+    "group": "Comments",
+    "description": "<p>This route can modify a specific comment with id.</p>",
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "http://localhost/api/comments/56dbf15c1ed727f82d272ce2",
+        "type": "json"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>The Comments-ID.</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotFound",
+            "description": "<p>There are not comment with this id</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotValid",
+            "description": "<p>The request is not valid</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "Error404",
+            "description": "<p>The server has an unexpected error</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response (Not Found):",
+          "content": "\nuser not found",
+          "type": "json"
+        },
+        {
+          "title": "Response (Not Valid):",
+          "content": "\n{\n  \"message\": \"Cast to ObjectId failed for value \\\"null=56dae5ce12916cf4357035c6\\\" at path \\\"_id\\\"\",\n  \"name\": \"CastError\",\n  \"kind\": \"ObjectId\",\n  \"value\": \"null=56dae5ce12916cf4357035c6\",\n  \"path\": \"_id\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "app/controllers/comments.js",
+    "groupTitle": "Comments"
+  },
+  {
+    "type": "post",
     "url": "/issues/:id/actions",
     "title": "Create an action",
     "version": "0.0.0",
