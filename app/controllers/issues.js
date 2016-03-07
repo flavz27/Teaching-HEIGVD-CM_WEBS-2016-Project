@@ -28,12 +28,15 @@ function findIssue(req, res, next) {
      .limit(limit);*/
 
     if (req.query.embed == 'user') {
-        query = query.populate('user'); //TODO: not working
+        query = query.populate('user');
     }
 
     if (req.query.embed2 == 'comment') {
-        query = query.populate('comments_user.comment'); //Not working either... Idk why...
+        query = query.populate('comments_user.comment');
     }
+
+    query = query.populate('action.comment');
+
     //TODO populate actions with their comments
     query.exec(function (err, issue) {
         if (err) {
@@ -52,30 +55,7 @@ function findIssue(req, res, next) {
     });
 }
 
-/*
-function findMatchingIssues(callback) {
 
-    var query = Issue
-        .find(criteria)
-        // Do not forget to sort, as pagination makes more sense with sorting.
-      /!*  .sort('date')*!/ TODO
-        .skip(offset)
-        .limit(limit);
-
-    // Embed publisher object if specified in the query.
-/!*    if (req.query.embed == 'publisher') {
-        query = query.populate('publisher');
-    }*!/
-
-    // Execute the query.
-    query.exec(function(err, issues) {
-        if (err) {
-            callback(err);
-        } else {
-            callback(undefined, issues);
-        }
-    });
-}*/
 
 
 /**
