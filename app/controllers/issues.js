@@ -28,13 +28,13 @@ function findIssue(req, res, next) {
      .limit(limit);*/
 
     if (req.query.embed == 'user') {
-        query = query.populate('user'); //TODO: not working
+        query = query.populate('user');
     }
 
     if (req.query.embed2 == 'comment') {
-        query = query.populate('comments_user.comment'); //Not working either... Idk why...
+        query = query.populate('comments_user.comment');
     }
-    //TODO populate actions with their comments
+
     query.exec(function (err, issue) {
         if (err) {
             res.status(500).send(err);
@@ -52,30 +52,7 @@ function findIssue(req, res, next) {
     });
 }
 
-/*
-function findMatchingIssues(callback) {
 
-    var query = Issue
-        .find(criteria)
-        // Do not forget to sort, as pagination makes more sense with sorting.
-      /!*  .sort('date')*!/ TODO
-        .skip(offset)
-        .limit(limit);
-
-    // Embed publisher object if specified in the query.
-/!*    if (req.query.embed == 'publisher') {
-        query = query.populate('publisher');
-    }*!/
-
-    // Execute the query.
-    query.exec(function(err, issues) {
-        if (err) {
-            callback(err);
-        } else {
-            callback(undefined, issues);
-        }
-    });
-}*/
 
 
 /**
@@ -158,9 +135,9 @@ router.get('/status', function (req, res, next) {
             res.send(issues);
         });
     } else {
-        res.status(500);
+        res.status(500).send("the data entered is not authorized");
         return;
-    } //TODO: error not working
+    }
 
 
 
@@ -234,7 +211,7 @@ router.get('/status', function (req, res, next) {
 
 
 /**
- * add an action to issue /TODO why does it create an id ? not too important but I don't understand why it does that...
+ * add an action to issue
  */
 router.post('/:id/actions', findIssue, function (req, res, next) {
 
@@ -329,7 +306,7 @@ router.post('/:id/actions', findIssue, function (req, res, next) {
 
 
 /**
- * add a tag to issue //TODO why does it create an id ? not too important but I don't understand why it does that...
+ * add a tag to issue //
  */
 router.post('/:id/tags', findIssue, function (req, res, next) {
 
