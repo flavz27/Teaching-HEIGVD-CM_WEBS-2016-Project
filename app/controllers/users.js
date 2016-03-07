@@ -60,7 +60,7 @@ module.exports = function (app) {
  * @apiName PostUser
  * @apiGroup Users
  *
- * @apiDescription This route can create a news user with status staff or not.
+ * @apiDescription This route can create a news user with status staff or not and citizen or not.
  *
  * @apiExample Example usage:
  * http://localhost/api/users
@@ -120,7 +120,7 @@ router.post('/', function (req, res, next) { //chemin relatif a "api/people"
 /**
  * @api {get} /users/citizens Get all citizens
  * @apiVersion 0.0.0
- * @apiName GetUserCitizen
+ * @apiName GetUsersCitizen
  * @apiGroup Users
  *
  * @apiDescription This route can get all user how are citizen (with boolean citizen true).
@@ -265,7 +265,7 @@ router.get('/', function (req, res, next) {
  * @apiName GetUser
  * @apiGroup Users
  *
- * @apiDescription This route can gets a specific user based on id.
+ * @apiDescription This route can gets a specific user with id.
  *
  * @apiExample Example usage:
  * http://localhost/api/users/56ced66daa89b1aa47ed6a46
